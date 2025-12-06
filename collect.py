@@ -10,8 +10,8 @@
 # ratio_extErrors - ibid external
 
 # login_form - presence of login form
-
 # external_favicon - presence of external favicon
+
 # links_in_tags - presence of hyperlinks in <script> <style> ... tags
 # submit_email - email submissiosn in forms
 # ratio_intMedia
@@ -94,7 +94,7 @@ def collect_features(url: str):
         #this function is a little unreliable
         favicon:int = 0
         all_favicon = soup.find_all('link', rel="icon")
-        print(f'all: {all_favicon}')
+        #print(f'all: {all_favicon}')
         for icon in all_favicon:
             href = icon.get('href')
             print(href)
@@ -102,6 +102,18 @@ def collect_features(url: str):
             #     favicon += 1
             if ((href and 'http') or (href and 'www.') ) in href:
                 favicon+=1
+        
+
+        # links in tags
+        presence_of_links_in_tags = 0
+        all_scripts_styles = soup.find_all(['script', 'style'])
+        print(f'content: {all_scripts_styles} ')
+        for tag in all_scripts_styles:
+            print(f'tag content: {tag}')
+            tag = str(tag)
+            if ('http' in tag) or ('//' in tag):
+                print('fruit')
+                presence_of_links_in_tags = 1
         
         
         
@@ -121,7 +133,7 @@ def collect_features(url: str):
         base_nod = soup.html if (soup.html != None) else soup
         page_depth = depth(base_nod)
 
-        result = (url, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form, favicon, page_depth)
+        result = (url, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form, favicon,presence_of_links_in_tags, page_depth)
 
         return(result)
     
@@ -132,7 +144,7 @@ def collect_features(url: str):
 def main(links: list, filename: str):
     
     #tentative
-    header = ['url', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form', 'favicon', 'page_depth']
+    header = ['url', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form', 'favicon','links_in_tags', 'page_depth']
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(header)
@@ -142,17 +154,19 @@ def main(links: list, filename: str):
     print(f'Scraping complete: data save to {filename}')
 
 tentative_links = [
-    # 'https://en.wikipedia.org/wiki/University_of_Warwick',
-    # 'https://www.google.com/',
+    'https://en.wikipedia.org/wiki/University_of_Warwick',
+    'https://www.google.com/'
     # 'https://docs.google.com/forms/',
-    'https://j206f.xyz/',
-    'https://ortan.ru/vendor/nesbot/https/verif2.php',
-    'https://meta-realm-9t6.pages.dev/',
-    'https://meta-anchorage.pages.dev/',
-    'https://teppalaakash.github.io/netflix-clone/',
-    'https://muskan-ahuja567.github.io/Amazon-clone/',
-    'https://jupiterexchangedapps.pages.dev/',
-    'https://saloni156.github.io/Amazon-project/'
+    # 'https://serasa-feirao.github.io/2025/',
+    # 'http://express.rakutenglobal.com/'
+    # 'https://j206f.xyz/',
+    # 'https://ortan.ru/vendor/nesbot/https/verif2.php',
+    # 'https://meta-realm-9t6.pages.dev/',
+    # 'https://meta-anchorage.pages.dev/',
+    # 'https://teppalaakash.github.io/netflix-clone/',
+    # 'https://muskan-ahuja567.github.io/Amazon-clone/',
+    # 'https://jupiterexchangedapps.pages.dev/',
+    # 'https://saloni156.github.io/Amazon-project/'
 ]
 
 main(tentative_links, 'test.csv')

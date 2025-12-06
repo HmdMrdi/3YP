@@ -1,9 +1,3 @@
-url,nb_hyperlinks,ratio_intHyperlinks,ratio_extHyperlinks,ratio_nullHyperlinks,nb_extCSS,login_form,favicon,page_depth
-https://j206f.xyz/,,
-https://ortan.ru/vendor/nesbot/https/verif2.php,,
-https://meta-realm-9t6.pages.dev/,,
-https://meta-anchorage.pages.dev/,,
-https://teppalaakash.github.io/netflix-clone/,16,0.0,0.0,0.0,0,0,0,5
-https://muskan-ahuja567.github.io/Amazon-clone/,39,0.0,0.0,0.0,1,0,0,6
-https://jupiterexchangedapps.pages.dev/,,
-https://saloni156.github.io/Amazon-project/,35,0.0,0.17142857142857143,0.8285714285714286,1,0,0,6
+url,nb_hyperlinks,ratio_intHyperlinks,ratio_extHyperlinks,ratio_nullHyperlinks,nb_extCSS,login_form,favicon,links_in_tags,page_depth
+https://en.wikipedia.org/wiki/University_of_Warwick,1244,0.0008038585209003215,0.21784565916398713,0.0008038585209003215,0,0,0,1,26
+https://www.google.com/,12,0.0,0.16666666666666666,0.08333333333333333,0,0,0,1,10
