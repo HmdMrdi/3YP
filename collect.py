@@ -86,10 +86,17 @@ def collect_features(url: str):
         login_form = 0
         login_form: int
         all_forms = soup.find_all('form')
-        for _ in all_forms:
+        for form in all_forms:
             password_input = soup.find('input', {'type':'password'})
             if password_input:
                 login_form = 1
+        # server form handler
+            handler = form.get('action')
+            if handler != None:
+                sfh = True
+            else:
+                sfh = False
+
         
         #this function is a little unreliable
         favicon:int = 0
@@ -97,7 +104,7 @@ def collect_features(url: str):
         #print(f'all: {all_favicon}')
         for icon in all_favicon:
             href = icon.get('href')
-            print(href)
+            #print(href)
             # if (href.startswith('http')):
             #     favicon += 1
             if ((href and 'http') or (href and 'www.') ) in href:
@@ -107,16 +114,47 @@ def collect_features(url: str):
         # links in tags
         presence_of_links_in_tags = 0
         all_scripts_styles = soup.find_all(['script', 'style'])
-        print(f'content: {all_scripts_styles} ')
+        #print(f'content: {all_scripts_styles} ')
         for tag in all_scripts_styles:
-            print(f'tag content: {tag}')
+            #print(f'tag content: {tag}')
             tag = str(tag)
             if ('http' in tag) or ('//' in tag):
                 print('fruit')
                 presence_of_links_in_tags = 1
         
         
+        # email submission forms
+        all_forms = soup.find_all('form')
+        email_submission_forms = 0
+        for _ in all_forms:
+            email = soup.find('input', {'type':'email'})
+            if email:
+                email_submission_forms += 1
+
         
+        # ratio_intMedia and extmEDIA
+        internal_media_count = external_media_count = 0
+        media_tags = soup.find_all(['audio', 'video', 'img', 'source'])
+        for media in media_tags:
+            media= str(media)
+            print(media)
+            if ('http' in media) and not (url in media):
+                external_media_count +=1
+            else:
+                internal_media_count +=1
+
+        # iframe
+        nb_iframes = len(soup.find_all('iframe'))
+
+        # popup_window
+        nb_popup_window = 0
+        all_scripts = soup.find_all('script')
+        for script in all_scripts:
+            script = str(script)
+            if 'window.open' in script:
+                nb_popup_window +=1
+
+
         # get depth - recusrive child 
         def depth(node, current_depth=0) -> int:
             max_depth = current_depth
@@ -133,7 +171,9 @@ def collect_features(url: str):
         base_nod = soup.html if (soup.html != None) else soup
         page_depth = depth(base_nod)
 
-        result = (url, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form, favicon,presence_of_links_in_tags, page_depth)
+        result = (url, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
+                   favicon,presence_of_links_in_tags, email_submission_forms, internal_media_count, external_media_count,
+                    sfh, nb_iframes, nb_popup_window, page_depth)
 
         return(result)
     
@@ -144,7 +184,9 @@ def collect_features(url: str):
 def main(links: list, filename: str):
     
     #tentative
-    header = ['url', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form', 'favicon','links_in_tags', 'page_depth']
+    header = ['url', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form',
+               'favicon','links_in_tags', 'email_submission_forms','internal_media_count', 'external_media_count', 'sfh', 'nb_iframe','nb_popup_window_count',
+                 'page_depth']
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(header)
@@ -170,5 +212,4 @@ tentative_links = [
 ]
 
 main(tentative_links, 'test.csv')
-        
         
