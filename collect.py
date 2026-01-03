@@ -19,20 +19,25 @@
 # sfh
 # iframe
 # popup_window
+
 # safe_anchor - presence of safe anchors
+
 # onmouseover - present of onmouseover eventhandler
 # right_click - right click disabled
 # empty_title - self-explanatory
 # DOM depth - depth of the DOM tree
 # 
 
+# NOTE: most of the above are based off of an older dataset - mixed with some new feautures not all will be implemented
+
 import requests
 import cloudscraper
 from bs4 import BeautifulSoup, NavigableString
 import csv
 import urllib3
+import os
 
-def collect_features(url: str):
+def collect_features(url: str, safety_tag: str):
     # to prevent 403 errors 
     headers = {
         # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0'
@@ -46,6 +51,7 @@ def collect_features(url: str):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         
         # NOTE: cloudscraper doesnt work either... selenium?
+        # i dont actually care anymore, if it doesnt work just skip -> although means dataset ignores cloudfare protected or cloudflare designated malicious sites
         scraper = cloudscraper.CloudScraper()
         response = scraper.get(url,headers=headers, timeout=10)
 
@@ -68,23 +74,31 @@ def collect_features(url: str):
 
 
         link_count = len(hyperlinks)
-        print(f'internal = {internal_link_count} external = {external_link_count} null = {null_link_count}')
-        ratio_intHyperlinks = (internal_link_count/link_count)
-        ratio_extHyperlinks = (external_link_count/link_count)
-        ratio_nullHyperlinks = (null_link_count/link_count)
+        # print(f'internal = {internal_link_count} external = {external_link_count} null = {null_link_count}')
+        if link_count == 0:
+            ratio_intHyperlinks = ratio_extHyperlinks = ratio_nullHyperlinks = 0
+        else:
+            ratio_intHyperlinks = (internal_link_count/link_count)
+            ratio_extHyperlinks = (external_link_count/link_count)
+            ratio_nullHyperlinks = (null_link_count/link_count)
 
         # styling
         nb_extCSS = 0
         styling = soup.find_all('link', rel='stylesheet')
         for style in styling:
             href = (style.get('href'))
-            if href.startswith('http'):
-                nb_extCSS += 1
+            try:
+                if href.startswith('http'):
+                    nb_extCSS += 1
+            except:
+                print(f'href for link: {url} couldnt be processed')
+                continue
 
             
         # login form and favicon
-        login_form = 0
-        login_form: int
+        sfh:bool = False
+        login_form:int = 0
+
         all_forms = soup.find_all('form')
         for form in all_forms:
             password_input = soup.find('input', {'type':'password'})
@@ -107,9 +121,12 @@ def collect_features(url: str):
             #print(href)
             # if (href.startswith('http')):
             #     favicon += 1
-            if ((href and 'http') or (href and 'www.') ) in href:
-                favicon+=1
-        
+            try:
+                if ((href and 'http') or (href and 'www.') ) in href:
+                    favicon+=1
+            except:
+                print(f'favicon for link: {url} couldnt be processed')
+                continue
 
         # links in tags
         presence_of_links_in_tags = 0
@@ -119,7 +136,6 @@ def collect_features(url: str):
             #print(f'tag content: {tag}')
             tag = str(tag)
             if ('http' in tag) or ('//' in tag):
-                print('fruit')
                 presence_of_links_in_tags = 1
         
         
@@ -137,7 +153,7 @@ def collect_features(url: str):
         media_tags = soup.find_all(['audio', 'video', 'img', 'source'])
         for media in media_tags:
             media= str(media)
-            print(media)
+            # print(media)
             if ('http' in media) and not (url in media):
                 external_media_count +=1
             else:
@@ -153,6 +169,33 @@ def collect_features(url: str):
             script = str(script)
             if 'window.open' in script:
                 nb_popup_window +=1
+
+        # hovering even handler
+        onmouseover_elements = soup.find_all(attrs={"onmouseover": True})
+        if onmouseover_elements:
+            onmouseover = True
+        else:
+            onmouseover = False
+
+        # right click disabled -> RCD
+        RCD_elements = soup.find_all(attrs={"oncontextmenu": True})
+        rcd = True if RCD_elements else False
+        # if RCD_elements:
+        #     rcd = True
+        # else:
+        #     rcd = False
+
+
+        # check if empty title
+        title_tag = soup.find('title')
+        if not title_tag or title_tag == None:
+            empty_title = True
+        elif title_tag.string == None:
+            empty_title = True
+        elif title_tag.string == "":
+            empty_title = True
+        else:
+            empty_title = False
 
 
         # get depth - recusrive child 
@@ -171,45 +214,65 @@ def collect_features(url: str):
         base_nod = soup.html if (soup.html != None) else soup
         page_depth = depth(base_nod)
 
-        result = (url, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
+        result = (url, safety_tag, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
                    favicon,presence_of_links_in_tags, email_submission_forms, internal_media_count, external_media_count,
-                    sfh, nb_iframes, nb_popup_window, page_depth)
+                    sfh, nb_iframes, nb_popup_window, onmouseover, rcd, empty_title, page_depth)
 
         return(result)
     
     except requests.RequestException as e:
         print(f'Error fetching {url}: {e}')
-        return(url, None, None)
+        return(-1)
 
-def main(links: list, filename: str):
+def main(links: list, filename: str, safety_tag: str):
+    skipped_urls = []
+    existing_urls = set()
+    header = ['url', 'safety_tag', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form',
+               'favicon','links_in_tags', 'email_submission_forms','internal_media_count', 'external_media_count',
+                 'sfh', 'nb_iframe','nb_popup_window_count', 'onmouseover', 'right click disabled', 'empty_title', 'page_depth']
     
-    #tentative
-    header = ['url', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form',
-               'favicon','links_in_tags', 'email_submission_forms','internal_media_count', 'external_media_count', 'sfh', 'nb_iframe','nb_popup_window_count',
-                 'page_depth']
-    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+
+    if os.path.exists(filename):
+        with open(filename, mode='r', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                if row:
+                    existing_urls.add(row[0])
+
+    with open(filename, mode='a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(header)
+        if not (os.path.exists(filename)):
+            writer.writerow(header)
+        
         for link in links:
-            result = collect_features(link)
-            writer.writerow(result)
-    print(f'Scraping complete: data save to {filename}')
+            if link not in existing_urls:
+                result = collect_features(link, safety_tag)
+                if result != -1:
+                    writer.writerow(result)
+                else:
+                    print(f'Skipping url due to error: {link}')
+                    skipped_urls.append(link)
+            else:
+                print(f'Skipping duplicate url: {link}')
+    
 
-tentative_links = [
-    'https://en.wikipedia.org/wiki/University_of_Warwick',
-    'https://www.google.com/'
-    # 'https://docs.google.com/forms/',
-    # 'https://serasa-feirao.github.io/2025/',
-    # 'http://express.rakutenglobal.com/'
-    # 'https://j206f.xyz/',
-    # 'https://ortan.ru/vendor/nesbot/https/verif2.php',
-    # 'https://meta-realm-9t6.pages.dev/',
-    # 'https://meta-anchorage.pages.dev/',
-    # 'https://teppalaakash.github.io/netflix-clone/',
-    # 'https://muskan-ahuja567.github.io/Amazon-clone/',
-    # 'https://jupiterexchangedapps.pages.dev/',
-    # 'https://saloni156.github.io/Amazon-project/'
-]
 
-main(tentative_links, 'test.csv')
+def linkify_the_text_file(link_file):
+    links = []
+    with open(link_file, 'r', encoding='utf-8') as file:
+        for line in file:
+            url=line.strip()
+            links.append(url)
+    return links
+
+
+
+# file_names = ['gng_links.txt', 'opp_links.txt', 'gpt_links.txt']
+# website_tags = ['benign', 'malicious', 'gpt_generated']
+file_names = ['gng_links.txt', 'gpt_links.txt']
+website_tags = ['benign', 'gpt_generated']
+for x, file in enumerate(file_names):
+    file = linkify_the_text_file(file)
+    main(file, 'website_features.csv', website_tags[x])
         
