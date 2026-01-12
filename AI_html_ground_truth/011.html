@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Your Dream Job - JobHunt</title>
+    <link rel="stylesheet" href="jobboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">JobHunt</div>
+      <div class="nav-links">
+        <a href="#">Find Jobs</a>
+        <a href="#">Companies</a>
+        <a href="#">Salaries</a>
+        <button class="btn-outline">Sign In</button>
+        <button class="btn-primary">Post a Job</button>
+      </div>
+    </nav>
+
+    <header class="search-header">
+      <h1>Find your next career move</h1>
+      <form id="job-search-form" onsubmit="return false;">
+        <div class="input-group">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Job title, keywords, or company" />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-map-marker-alt"></i>
+          <input type="text" placeholder="City or 'Remote'" />
+        </div>
+        <button type="submit" class="btn-search">Search</button>
+      </form>
+    </header>
+
+    <div class="container layout">
+      <aside class="filters">
+        <h3>Filters</h3>
+        <div class="filter-group">
+          <h4>Job Type</h4>
+          <label><input type="checkbox" checked /> Full-time</label>
+          <label><input type="checkbox" /> Contract</label>
+          <label><input type="checkbox" /> Part-time</label>
+        </div>
+        <div class="filter-group">
+          <h4>Experience Level</h4>
+          <label><input type="checkbox" /> Entry Level</label>
+          <label><input type="checkbox" /> Senior</label>
+          <label><input type="checkbox" /> Manager</label>
+        </div>
+      </aside>
+
+      <main class="job-feed">
+        <p class="results-count">Showing 45 jobs</p>
+
+        <article class="job-card" id="job-1">
+          <div class="card-header" onclick="toggleJobDetails('job-1')">
+            <div class="company-logo">G</div>
+            <div class="job-info">
+              <h2>Senior Frontend Engineer</h2>
+              <span class="company">Google</span> •
+              <span class="location">Remote</span>
+              <div class="tags">
+                <span class="tag">$140k - $180k</span>
+                <span class="tag">React</span>
+              </div>
+            </div>
+            <button class="btn-expand">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <div class="job-details hidden">
+            <p>
+              We are looking for an experienced engineer to join our cloud
+              team...
+            </p>
+            <ul>
+              <li>5+ years of experience with React</li>
+              <li>Strong understanding of CSS/HTML</li>
+            </ul>
+            <div class="actions">
+              <button
+                class="btn-apply"
+                onclick="openApplyModal('Senior Frontend Engineer')"
+              >
+                Apply Now
+              </button>
+              <button class="btn-save">
+                <i class="far fa-bookmark"></i> Save
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="job-card" id="job-2">
+          <div class="card-header" onclick="toggleJobDetails('job-2')">
+            <div class="company-logo">A</div>
+            <div class="job-info">
+              <h2>Product Designer</h2>
+              <span class="company">Airbnb</span> •
+              <span class="location">San Francisco, CA</span>
+              <div class="tags">
+                <span class="tag">$120k - $150k</span>
+                <span class="tag">Figma</span>
+              </div>
+            </div>
+            <button class="btn-expand">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="job-details hidden">
+            <p>Help us design the future of travel...</p>
+            <div class="actions">
+              <button
+                class="btn-apply"
+                onclick="openApplyModal('Product Designer')"
+              >
+                Apply Now
+              </button>
+              <button class="btn-save">
+                <i class="far fa-bookmark"></i> Save
+              </button>
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <div id="apply-modal" class="modal-overlay hidden">
+      <div class="modal-box">
+        <button class="close-modal" onclick="closeApplyModal()">×</button>
+        <h3>Apply for <span id="modal-job-title">Job</span></h3>
+        <form>
+          <label>Full Name</label>
+          <input type="text" required />
+          <label>Email</label>
+          <input type="email" required />
+          <label>Resume/CV</label>
+          <input type="file" required />
+          <button type="submit" class="btn-submit">Submit Application</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="jobboard.js"></script>
+    <script>
+      // Inline helpers for interaction
+      function toggleJobDetails(id) {
+        const card = document.getElementById(id);
+        card.querySelector(".job-details").classList.toggle("hidden");
+        card.querySelector(".btn-expand i").classList.toggle("fa-rotate-180");
+      }
+
+      function openApplyModal(title) {
+        document.getElementById("modal-job-title").innerText = title;
+        document.getElementById("apply-modal").classList.remove("hidden");
+      }
+
+      function closeApplyModal() {
+        document.getElementById("apply-modal").classList.add("hidden");
+      }
+    </script>
+  </body>
+</html>

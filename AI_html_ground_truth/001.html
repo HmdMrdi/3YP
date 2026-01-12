@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All - BrandName</title>
+    <link rel="stylesheet" href="ecommerce.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">BrandName</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">About</a>
+        </nav>
+        <div class="cart-icon" id="cart-btn">
+            <i class="fas fa-shopping-cart"></i> 
+            <span id="cart-count">2</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="filters" id="filter-sidebar">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button class="close-filters d-md-none" onclick="toggleFilters()">×</button>
+            </div>
+            
+            <form id="filter-form">
+                <div class="filter-group">
+                    <h4>Category</h4>
+                    <label><input type="checkbox" name="cat" value="electronics"> Electronics</label>
+                    <label><input type="checkbox" name="cat" value="clothing"> Clothing</label>
+                    <label><input type="checkbox" name="cat" value="home"> Home & Garden</label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <label><input type="radio" name="price" value="low"> Under $25</label>
+                    <label><input type="radio" name="price" value="mid"> $25 - $100</label>
+                    <label><input type="radio" name="price" value="high"> $100+</label>
+                </div>
+
+                <button type="submit" class="btn-apply">Apply Filters</button>
+            </form>
+        </aside>
+
+        <main class="product-feed">
+            <div class="feed-header">
+                <h2>Menswear (<span id="product-count">124</span> items)</h2>
+                
+                <button class="d-md-none" onclick="toggleFilters()">Filter Results</button>
+
+                <div class="sort-options">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort" onchange="sortProducts(this.value)">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <article class="product-card" data-id="101" data-category="clothing" data-price="25.00">
+                    <div class="image-placeholder">Image</div>
+                    <div class="card-details">
+                        <span class="category">Clothing</span>
+                        <h3>Classic White Tee</h3>
+                        <p class="price">$25.00</p>
+                        <button class="btn-add" onclick="addToCart(101)">Add to Cart</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="102" data-category="accessories" data-price="45.00">
+                    <div class="image-placeholder">Image</div>
+                    <div class="card-details">
+                        <span class="category">Accessories</span>
+                        <h3>Leather Wallet</h3>
+                        <p class="price">$45.00</p>
+                        <button class="btn-add" onclick="addToCart(102)">Add to Cart</button>
+                    </div>
+                </article>
+                
+                </div>
+
+            <nav class="pagination">
+                <button class="prev" disabled>Previous</button>
+                <button class="page-num active">1</button>
+                <button class="page-num">2</button>
+                <button class="next">Next</button>
+            </nav>
+        </main>
+    </div>
+
+    <script src="ecommerce.js"></script>
+    <script>
+        // Simple inline helper for mobile toggle
+        function toggleFilters() {
+            document.getElementById('filter-sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homes for Sale in Seattle, WA</title>
+    <link rel="stylesheet" href="realestate.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">EstateFinder</div>
+      <div class="search-bar">
+        <input type="text" value="Seattle, WA" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+      <nav>
+        <a href="#">Buy</a>
+        <a href="#">Rent</a>
+        <a href="#">Sell</a>
+        <button class="btn-signin">Sign In</button>
+      </nav>
+    </header>
+
+    <div class="filter-bar">
+      <div class="dropdown">
+        <button class="dropbtn">
+          Price <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          Beds/Baths <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          Home Type <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <button class="save-search">Save Search</button>
+
+      <div class="view-toggle d-md-none">
+        <button class="active" onclick="switchView('list')">List</button>
+        <button onclick="switchView('map')">Map</button>
+      </div>
+    </div>
+
+    <div class="split-container">
+      <main class="listings-column" id="listings-view">
+        <h3>42 Listings found</h3>
+
+        <div class="listing-grid">
+          <article class="property-card" onmouseover="highlightMapMarker(1)">
+            <div class="card-image">
+              <div class="badge">New</div>
+              <img src="placeholder-house.jpg" alt="House" />
+              <button class="btn-fav" onclick="toggleFavorite(this)">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="card-info">
+              <div class="price">$850,000</div>
+              <div class="stats">
+                <span>3 bds</span>
+                <span>2 ba</span>
+                <span>1,800 sqft</span>
+              </div>
+              <address>123 Pine St, Seattle, WA 98101</address>
+              <div class="realtor">Listed by: John Doe Real Estate</div>
+            </div>
+          </article>
+
+          <article class="property-card" onmouseover="highlightMapMarker(2)">
+            <div class="card-image">
+              <img src="placeholder-house-2.jpg" alt="House" />
+              <button class="btn-fav" onclick="toggleFavorite(this)">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="card-info">
+              <div class="price">$620,000</div>
+              <div class="stats">
+                <span>2 bds</span>
+                <span>1 ba</span>
+                <span>950 sqft</span>
+              </div>
+              <address>456 Oak Ave, Seattle, WA 98102</address>
+              <div class="realtor">Listed by: Smith Group</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="pagination">
+          <button disabled>&laquo;</button>
+          <button class="active">1</button>
+          <button>2</button>
+          <button>&raquo;</button>
+        </div>
+      </main>
+
+      <aside class="map-column" id="map-view">
+        <div id="interactive-map">
+          <div class="map-placeholder-overlay">
+            <p><i class="fas fa-map-marked-alt"></i> Interactive Map Loaded</p>
+            <div
+              class="pin"
+              style="top: 40%; left: 30%"
+              data-id="1"
+              onclick="scrollToListing(1)"
+            >
+              $850k
+            </div>
+            <div
+              class="pin"
+              style="top: 60%; left: 55%"
+              data-id="2"
+              onclick="scrollToListing(2)"
+            >
+              $620k
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="realestate.js"></script>
+    <script>
+      // Inline logic for mobile toggle visualization
+      function switchView(view) {
+        const list = document.getElementById("listings-view");
+        const map = document.getElementById("map-view");
+        if (view === "map") {
+          list.style.display = "none";
+          map.style.display = "block";
+        } else {
+          list.style.display = "block";
+          map.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>

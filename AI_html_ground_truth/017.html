@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>facebook/react - GitHub Clone</title>
+    <link rel="stylesheet" href="repo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="repo-header">
+      <div class="header-left">
+        <i class="fas fa-book-open"></i>
+        <a href="#" class="user">facebook</a>
+        <span class="divider">/</span>
+        <a href="#" class="repo">react</a>
+        <span class="badge-public">Public</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-action">
+          <i class="far fa-eye"></i> Watch <span class="count">6.7k</span>
+        </button>
+        <button class="btn-action">
+          <i class="fas fa-code-branch"></i> Fork <span class="count">45k</span>
+        </button>
+        <button class="btn-action star">
+          <i class="far fa-star"></i> Star <span class="count">213k</span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="repo-nav">
+      <a href="#" class="active"><i class="fas fa-code"></i> Code</a>
+      <a href="#"
+        ><i class="far fa-dot-circle"></i> Issues
+        <span class="counter">482</span></a
+      >
+      <a href="#"
+        ><i class="fas fa-code-branch"></i> Pull requests
+        <span class="counter">210</span></a
+      >
+      <a href="#"><i class="far fa-play-circle"></i> Actions</a>
+      <a href="#"><i class="fas fa-book"></i> Wiki</a>
+    </nav>
+
+    <div class="container main-layout">
+      <main class="content-col">
+        <div class="file-controls">
+          <div class="branch-selector">
+            <button class="btn-dropdown" onclick="toggleBranchMenu()">
+              <i class="fas fa-code-branch"></i> main
+              <i class="fas fa-caret-down"></i>
+            </button>
+            <div id="branch-menu" class="dropdown-menu hidden">
+              <input type="text" placeholder="Find a branch..." />
+              <ul>
+                <li class="active"><i class="fas fa-check"></i> main</li>
+                <li>dev</li>
+                <li>feature/new-hooks</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="file-actions">
+            <div class="last-commit">
+              <div class="avatar-tiny"></div>
+              <span><strong>danabramov</strong> updated README</span>
+              <span class="time">2 hours ago</span>
+            </div>
+            <button class="btn-primary green" onclick="toggleCloneModal()">
+              Code <i class="fas fa-caret-down"></i>
+            </button>
+
+            <div id="clone-modal" class="dropdown-menu right hidden">
+              <h4>Clone</h4>
+              <div class="input-group">
+                <input
+                  type="text"
+                  value="https://github.com/facebook/react.git"
+                  readonly
+                />
+                <button onclick="copyCloneLink()">
+                  <i class="far fa-copy"></i>
+                </button>
+              </div>
+              <a href="#">Download ZIP</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="file-table-container">
+          <table class="file-table">
+            <tbody>
+              <tr>
+                <td class="icon"><i class="fas fa-folder"></i></td>
+                <td class="name"><a href="#">packages</a></td>
+                <td class="message">Update dependencies</td>
+                <td class="time">2 days ago</td>
+              </tr>
+              <tr>
+                <td class="icon"><i class="fas fa-folder"></i></td>
+                <td class="name"><a href="#">scripts</a></td>
+                <td class="message">Fix build script for windows</td>
+                <td class="time">5 days ago</td>
+              </tr>
+              <tr>
+                <td class="icon"><i class="far fa-file-code"></i></td>
+                <td class="name"><a href="#">.gitignore</a></td>
+                <td class="message">Initial commit</td>
+                <td class="time">4 years ago</td>
+              </tr>
+              <tr>
+                <td class="icon"><i class="far fa-file-alt"></i></td>
+                <td class="name"><a href="#">LICENSE</a></td>
+                <td class="message">MIT License</td>
+                <td class="time">4 years ago</td>
+              </tr>
+              <tr>
+                <td class="icon"><i class="far fa-file-alt"></i></td>
+                <td class="name"><a href="#">README.md</a></td>
+                <td class="message">Update documentation links</td>
+                <td class="time">2 hours ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="readme-container">
+          <div class="readme-header"><i class="fas fa-list"></i> README.md</div>
+          <div class="markdown-body">
+            <h1>React</h1>
+            <p>React is a JavaScript library for building user interfaces.</p>
+            <ul>
+              <li>
+                <strong>Declarative:</strong> React makes it painless to create
+                interactive UIs.
+              </li>
+              <li>
+                <strong>Component-Based:</strong> Build encapsulated components
+                that manage their own state.
+              </li>
+            </ul>
+            <h2>Installation</h2>
+            <pre><code>npm install react react-dom</code></pre>
+          </div>
+        </div>
+      </main>
+
+      <aside class="sidebar-col">
+        <div class="sidebar-section">
+          <h3>About</h3>
+          <p>
+            A declarative, efficient, and flexible JavaScript library for
+            building user interfaces.
+          </p>
+          <div class="meta-link">
+            <i class="fas fa-link"></i> <a href="#">react.dev</a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Languages</h3>
+          <div class="lang-bar">
+            <div style="width: 90%; background: #f1e05a"></div>
+            <div style="width: 10%; background: #e34c26"></div>
+          </div>
+          <ul class="lang-list">
+            <li>
+              <span class="dot" style="background: #f1e05a"></span> JavaScript
+              90%
+            </li>
+            <li>
+              <span class="dot" style="background: #e34c26"></span> HTML 10%
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <script src="repo.js"></script>
+    <script>
+      // Inline Toggles
+      function toggleBranchMenu() {
+        document.getElementById("branch-menu").classList.toggle("hidden");
+      }
+
+      function toggleCloneModal() {
+        document.getElementById("clone-modal").classList.toggle("hidden");
+      }
+
+      function copyCloneLink() {
+        // Mock Copy
+        alert("Copied to clipboard!");
+      }
+
+      // Close dropdowns if clicking outside
+      window.onclick = function (event) {
+        if (
+          !event.target.matches(".btn-dropdown") &&
+          !event.target.matches(".btn-primary")
+        ) {
+          const dropdowns = document.getElementsByClassName("dropdown-menu");
+          for (let i = 0; i < dropdowns.length; i++) {
+            if (!dropdowns[i].classList.contains("hidden")) {
+              dropdowns[i].classList.add("hidden");
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

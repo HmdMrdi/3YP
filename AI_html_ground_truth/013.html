@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu - The Golden Spoon</title>
+    <link rel="stylesheet" href="restaurant.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="menu-header">
+      <div class="overlay">
+        <div class="logo">The Golden Spoon</div>
+        <p class="tagline">Fine Dining & Cocktails</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <nav class="menu-tabs">
+        <button
+          class="tab-btn active"
+          onclick="openCategory(event, 'starters')"
+        >
+          Starters
+        </button>
+        <button class="tab-btn" onclick="openCategory(event, 'mains')">
+          Mains
+        </button>
+        <button class="tab-btn" onclick="openCategory(event, 'desserts')">
+          Desserts
+        </button>
+        <button class="tab-btn" onclick="openCategory(event, 'drinks')">
+          Drinks
+        </button>
+      </nav>
+
+      <main class="menu-content">
+        <section id="starters" class="menu-category active">
+          <div class="category-header">
+            <h2>Starters</h2>
+            <p>Begin your journey with light bites.</p>
+          </div>
+
+          <div class="menu-grid">
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Bruschetta al Pomodoro</h3>
+                <span class="price">$12</span>
+              </div>
+              <p class="desc">
+                Grilled sourdough, vine tomatoes, garlic, basil, balsamic glaze.
+              </p>
+              <span class="dietary">VG</span>
+            </div>
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Calamari Fritti</h3>
+                <span class="price">$16</span>
+              </div>
+              <p class="desc">
+                Crispy squid rings, lemon aioli, spicy marinara dipping sauce.
+              </p>
+            </div>
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Beef Carpaccio</h3>
+                <span class="price">$22</span>
+              </div>
+              <p class="desc">
+                Thinly sliced raw beef, capers, parmesan shavings, truffle oil.
+              </p>
+              <span class="dietary">GF</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="mains" class="menu-category" style="display: none">
+          <div class="category-header">
+            <h2>Main Courses</h2>
+            <p>Hearty dishes made with local ingredients.</p>
+          </div>
+
+          <div class="menu-grid">
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Pan-Seared Salmon</h3>
+                <span class="price">$34</span>
+              </div>
+              <p class="desc">
+                Atlantic salmon, asparagus risotto, lemon butter sauce.
+              </p>
+              <span class="dietary">GF</span>
+            </div>
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Ribeye Steak (10oz)</h3>
+                <span class="price">$45</span>
+              </div>
+              <p class="desc">
+                Grass-fed beef, garlic mashed potatoes, seasonal vegetables.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="desserts" class="menu-category" style="display: none">
+          <div class="category-header">
+            <h2>Desserts</h2>
+            <p>Sweet endings.</p>
+          </div>
+          <div class="menu-grid">
+            <div class="menu-item">
+              <div class="item-header">
+                <h3>Tiramisu</h3>
+                <span class="price">$10</span>
+              </div>
+              <p class="desc">
+                Espresso-soaked ladyfingers, mascarpone cream, cocoa powder.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="sticky-footer">
+      <button class="btn-book">Book a Table</button>
+    </div>
+
+    <script src="restaurant.js"></script>
+    <script>
+      // Inline tab logic
+      function openCategory(evt, categoryName) {
+        // Hide all categories
+        const categories = document.getElementsByClassName("menu-category");
+        for (let i = 0; i < categories.length; i++) {
+          categories[i].style.display = "none";
+        }
+
+        // Remove active class from buttons
+        const tabLinks = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabLinks.length; i++) {
+          tabLinks[i].classList.remove("active");
+        }
+
+        // Show current category and add active class
+        document.getElementById(categoryName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

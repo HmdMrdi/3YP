@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - BrandName</title>
+    <link rel="stylesheet" href="privacy.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="simple-header">
+      <div class="container">
+        <div class="logo">BrandName</div>
+        <a href="#" class="back-link">&larr; Back to Home</a>
+      </div>
+    </header>
+
+    <div class="hero-small">
+      <div class="container">
+        <h1>Privacy Policy</h1>
+        <p>Last Updated: October 1, 2023</p>
+      </div>
+    </div>
+
+    <div class="container layout">
+      <aside class="toc-sidebar">
+        <div class="toc-wrapper">
+          <h3>Contents</h3>
+          <nav id="toc-nav">
+            <a href="#intro" class="toc-link active">1. Introduction</a>
+            <a href="#collection" class="toc-link">2. Information Collection</a>
+            <a href="#usage" class="toc-link">3. How We Use Data</a>
+            <a href="#sharing" class="toc-link">4. Sharing & Disclosure</a>
+            <a href="#cookies" class="toc-link">5. Cookies</a>
+            <a href="#rights" class="toc-link">6. Your Rights</a>
+            <a href="#contact" class="toc-link">7. Contact Us</a>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="legal-content">
+        <section id="intro">
+          <h2>1. Introduction</h2>
+          <p>
+            Welcome to BrandName. We are committed to protecting your personal
+            information and your right to privacy. If you have any questions or
+            concerns about this privacy notice, or our practices with regards to
+            your personal information, please contact us.
+          </p>
+        </section>
+
+        <section id="collection">
+          <h2>2. Information We Collect</h2>
+          <p>
+            We collect personal information that you voluntarily provide to us
+            when you register on the website, express an interest in obtaining
+            information about us or our products and services, when you
+            participate in activities on the website, or otherwise when you
+            contact us.
+          </p>
+
+          <div class="collapsible-info">
+            <button class="collapse-btn" onclick="toggleDetails(this)">
+              <span>View Data Categories</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="collapse-content">
+              <ul>
+                <li>
+                  <strong>Identity Data:</strong> Name, username, or similar
+                  identifier.
+                </li>
+                <li>
+                  <strong>Contact Data:</strong> Billing address, delivery
+                  address, email address, and telephone numbers.
+                </li>
+                <li>
+                  <strong>Technical Data:</strong> IP address, login data,
+                  browser type and version.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="usage">
+          <h2>3. How We Use Your Data</h2>
+          <p>
+            We use personal information collected via our website for a variety
+            of business purposes described below. We process your personal
+            information for these purposes in reliance on our legitimate
+            business interests.
+          </p>
+          <ul>
+            <li>To facilitate account creation and logon process.</li>
+            <li>To send administrative information to you.</li>
+            <li>To fulfill and manage your orders.</li>
+          </ul>
+        </section>
+
+        <section id="sharing">
+          <h2>4. Sharing & Disclosure</h2>
+          <p>
+            We only share information with your consent, to comply with laws, to
+            provide you with services, to protect your rights, or to fulfill
+            business obligations.
+          </p>
+        </section>
+
+        <section id="cookies">
+          <h2>5. Cookies and Tracking Technologies</h2>
+          <p>
+            We may use cookies and similar tracking technologies (like web
+            beacons and pixels) to access or store information. Specific
+            information about how we use such technologies is set out in our
+            Cookie Notice.
+          </p>
+        </section>
+
+        <section id="rights">
+          <h2>6. Your Privacy Rights</h2>
+          <p>
+            In some regions (like the EEA and UK), you have certain rights under
+            applicable data protection laws. These may include the right (i) to
+            request access and obtain a copy of your personal information, (ii)
+            to request rectification or erasure.
+          </p>
+        </section>
+
+        <section id="contact">
+          <h2>7. Contact Us</h2>
+          <p>
+            If you have questions or comments about this notice, you may email
+            us at privacy@brandname.com or by post to:
+          </p>
+          <address>
+            BrandName Inc.<br />
+            123 Privacy Lane,<br />
+            Tech City, TC 90210
+          </address>
+        </section>
+
+        <div class="footer-note">
+          <button class="btn-print" onclick="window.print()">
+            <i class="fas fa-print"></i> Print Policy
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <script src="privacy.js"></script>
+    <script>
+      function toggleDetails(btn) {
+        const content = btn.nextElementSibling;
+        btn.querySelector("i").classList.toggle("fa-rotate-180");
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      }
+
+      // Simple ScrollSpy Logic (Inline Demo)
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".toc-link");
+
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

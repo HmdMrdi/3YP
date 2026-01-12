@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Events - October 2023</title>
+    <link rel="stylesheet" href="calendar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="calendar-container">
+      <header class="calendar-header">
+        <div class="month-selector">
+          <button class="btn-nav" onclick="changeMonth(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <h2 id="current-month">October 2023</h2>
+          <button class="btn-nav" onclick="changeMonth(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="view-options">
+          <button class="active">Month</button>
+          <button>Week</button>
+          <button>Day</button>
+          <button class="btn-add-event">
+            <i class="fas fa-plus"></i> New Event
+          </button>
+        </div>
+      </header>
+
+      <div class="days-header">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+      <div class="calendar-grid" id="calendar-grid">
+        <div class="day prev-month">28</div>
+        <div class="day prev-month">29</div>
+        <div class="day prev-month">30</div>
+
+        <div class="day">1</div>
+        <div class="day">2</div>
+        <div class="day">
+          <span class="date-num">3</span>
+          <div class="event blue" onclick="showPopover(this, 'evt-1')">
+            Team Sync
+          </div>
+        </div>
+        <div class="day">4</div>
+        <div class="day">
+          <span class="date-num">5</span>
+          <div class="event green" onclick="showPopover(this, 'evt-2')">
+            Payday 💰
+          </div>
+          <div class="event orange" onclick="showPopover(this, 'evt-3')">
+            Client Call
+          </div>
+        </div>
+        <div class="day">6</div>
+        <div class="day">7</div>
+
+        <div class="day">8</div>
+        <div class="day">9</div>
+        <div class="day current-day">
+          <span class="date-num">10</span>
+          <div class="event purple" onclick="showPopover(this, 'evt-4')">
+            Product Launch
+          </div>
+        </div>
+        <div class="day">11</div>
+        <div class="day">12</div>
+        <div class="day">13</div>
+        <div class="day">14</div>
+
+        <div class="day">15</div>
+        <div class="day">16</div>
+        <div class="day">17</div>
+        <div class="day">18</div>
+        <div class="day">19</div>
+        <div class="day">20</div>
+        <div class="day">21</div>
+      </div>
+    </div>
+
+    <div id="event-popover" class="popover hidden">
+      <div class="popover-content">
+        <button class="close-popover" onclick="hidePopover()">×</button>
+        <h4 id="pop-title">Event Title</h4>
+        <p class="time">
+          <i class="far fa-clock"></i>
+          <span id="pop-time">10:00 AM - 11:00 AM</span>
+        </p>
+        <p class="desc" id="pop-desc">Description goes here...</p>
+        <div class="pop-actions">
+          <button class="btn-edit">Edit</button>
+          <button class="btn-delete">Delete</button>
+        </div>
+      </div>
+      <div class="arrow"></div>
+    </div>
+
+    <script src="calendar.js"></script>
+    <script>
+      // Inline mock data for popovers
+      const eventData = {
+        "evt-1": {
+          title: "Team Sync",
+          time: "9:00 AM",
+          desc: "Weekly standup meeting.",
+        },
+        "evt-4": {
+          title: "Product Launch",
+          time: "All Day",
+          desc: "Launch v2.0 to public.",
+        },
+      };
+
+      function showPopover(element, eventId) {
+        const popover = document.getElementById("event-popover");
+        const data = eventData[eventId] || {
+          title: "Event",
+          time: "TBD",
+          desc: "No details.",
+        };
+
+        // Populate data
+        document.getElementById("pop-title").innerText = data.title;
+        document.getElementById("pop-time").innerText = data.time;
+        document.getElementById("pop-desc").innerText = data.desc;
+
+        // Simple positioning logic (centered for demo)
+        popover.classList.remove("hidden");
+        // Real positioning would use element.getBoundingClientRect() in calendar.js
+      }
+
+      function hidePopover() {
+        document.getElementById("event-popover").classList.add("hidden");
+      }
+    </script>
+  </body>
+</html>

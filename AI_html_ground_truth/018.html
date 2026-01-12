@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Daily Chronicle - Global News</title>
+    <link rel="stylesheet" href="news.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="breaking-news">
+      <span class="badge">BREAKING</span>
+      <div class="ticker-content" id="ticker">
+        <span class="item"
+          >Global markets reach all-time high amidst tech rally.</span
+        >
+        <span class="item">Local elections scheduled for next Tuesday.</span>
+      </div>
+      <button
+        class="close-ticker"
+        onclick="this.parentElement.style.display='none'"
+      >
+        ×
+      </button>
+    </div>
+
+    <header class="site-header">
+      <div class="top-bar">
+        <div class="date" id="current-date">Friday, Oct 27, 2023</div>
+        <div class="weather">
+          <i class="fas fa-cloud-sun"></i> <span id="temp">68°F</span> London
+        </div>
+      </div>
+      <div class="logo-container">
+        <h1 class="logo">The Daily Chronicle</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">World</a>
+        <a href="#">Politics</a>
+        <a href="#">Business</a>
+        <a href="#">Tech</a>
+        <a href="#">Science</a>
+        <a href="#">Health</a>
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </nav>
+    </header>
+
+    <div class="container layout">
+      <main class="main-content">
+        <article class="hero-article">
+          <div class="hero-img">
+            <span class="cat-tag">Politics</span>
+          </div>
+          <div class="hero-text">
+            <h2>Historic Summit Ends with New Climate Agreement</h2>
+            <p class="summary">
+              Leaders from 50 nations have signed a binding resolution to cut
+              emissions by half over the next decade.
+            </p>
+            <div class="meta">
+              By <strong>Jane O'Connor</strong> • 2 hours ago
+            </div>
+          </div>
+        </article>
+
+        <div class="sub-grid">
+          <article class="card">
+            <div class="img-thumb"></div>
+            <div class="card-content">
+              <span class="cat-tag red">Business</span>
+              <h3>Tech Giants Report Quarterly Earnings</h3>
+            </div>
+          </article>
+          <article class="card">
+            <div class="img-thumb"></div>
+            <div class="card-content">
+              <span class="cat-tag green">Science</span>
+              <h3>New Species Discovered in the Amazon</h3>
+            </div>
+          </article>
+        </div>
+
+        <section class="latest-feed">
+          <h3 class="section-title">Latest Stories</h3>
+
+          <article class="feed-item">
+            <div class="feed-img"></div>
+            <div class="feed-info">
+              <h4>Local Library Announces Renovation Plans</h4>
+              <p>
+                The city council approved the $2M budget for modernizing the
+                downtown branch.
+              </p>
+              <span class="time">30m ago</span>
+            </div>
+          </article>
+
+          <article class="feed-item">
+            <div class="feed-img"></div>
+            <div class="feed-info">
+              <h4>Sports: Championship Finals Set for Sunday</h4>
+              <p>
+                The defending champions will face the underdogs in what promises
+                to be an exciting match.
+              </p>
+              <span class="time">1hr ago</span>
+            </div>
+          </article>
+
+          <button class="btn-load-more" onclick="loadMoreNews()">
+            Load More Articles
+          </button>
+        </section>
+      </main>
+
+      <aside class="sidebar">
+        <div class="widget newsletter">
+          <h3>Briefing</h3>
+          <p>Sign up for the morning briefing.</p>
+          <form>
+            <input type="email" placeholder="Email address" />
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
+
+        <div class="widget trending">
+          <h3>Trending Now</h3>
+          <ol>
+            <li><a href="#">1. The Future of AI Regulation</a></li>
+            <li><a href="#">2. 5 Recipes for Fall</a></li>
+            <li><a href="#">3. Stock Market Analysis</a></li>
+            <li><a href="#">4. Interview with the President</a></li>
+            <li><a href="#">5. Travel Guide: Tokyo</a></li>
+          </ol>
+        </div>
+
+        <div class="widget ad-space">
+          <span>Advertisement</span>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-cols">
+          <div>
+            <h4>Sections</h4>
+            <ul>
+              <li><a href="#">World</a></li>
+              <li><a href="#">Tech</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>About</h4>
+            <ul>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="copyright">
+          &copy; 2023 The Daily Chronicle. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="news.js"></script>
+    <script>
+      // Inline mock for load more
+      function loadMoreNews() {
+        const btn = document.querySelector(".btn-load-more");
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        setTimeout(() => {
+          btn.innerHTML = "Load More Articles";
+          alert("In a real app, this fetches more JSON data.");
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

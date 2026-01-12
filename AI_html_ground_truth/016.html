@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wanderlust - Book Your Trip</title>
+    <link rel="stylesheet" href="travel.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo"><i class="fas fa-plane-departure"></i> Wanderlust</div>
+      <div class="nav-links">
+        <a href="#">Trips</a>
+        <a href="#">Deals</a>
+        <a href="#">Sign In</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="search-container">
+        <h1>Where to next?</h1>
+
+        <div class="booking-widget">
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('flights')">
+              <i class="fas fa-plane"></i> Flights
+            </button>
+            <button class="tab-btn" onclick="switchTab('hotels')">
+              <i class="fas fa-bed"></i> Hotels
+            </button>
+            <button class="tab-btn" onclick="switchTab('cars')">
+              <i class="fas fa-car"></i> Cars
+            </button>
+          </div>
+
+          <form
+            id="flights"
+            class="search-form active"
+            onsubmit="return false;"
+          >
+            <div class="trip-type">
+              <label
+                ><input type="radio" name="trip" checked /> Round Trip</label
+              >
+              <label><input type="radio" name="trip" /> One Way</label>
+            </div>
+
+            <div class="input-grid">
+              <div class="field-group">
+                <label>From</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input type="text" placeholder="City or Airport" />
+                </div>
+              </div>
+
+              <div class="switch-icon"><i class="fas fa-exchange-alt"></i></div>
+
+              <div class="field-group">
+                <label>To</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input type="text" placeholder="City or Airport" />
+                </div>
+              </div>
+            </div>
+
+            <div class="input-grid">
+              <div class="field-group">
+                <label>Depart</label>
+                <input type="date" />
+              </div>
+              <div class="field-group">
+                <label>Return</label>
+                <input type="date" />
+              </div>
+              <div class="field-group">
+                <label>Travelers</label>
+                <div class="passenger-select">
+                  <i class="fas fa-user"></i>
+                  <select>
+                    <option>1 Adult</option>
+                    <option>2 Adults</option>
+                    <option>2 Adults, 1 Child</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-search">Search Flights</button>
+          </form>
+
+          <form id="hotels" class="search-form hidden" onsubmit="return false;">
+            <div class="field-group full-width">
+              <label>Destination</label>
+              <input type="text" placeholder="Where are you going?" />
+            </div>
+            <div class="input-grid">
+              <div class="field-group">
+                <label>Check-in</label>
+                <input type="date" />
+              </div>
+              <div class="field-group">
+                <label>Check-out</label>
+                <input type="date" />
+              </div>
+            </div>
+            <button class="btn-search">Search Hotels</button>
+          </form>
+
+          <form id="cars" class="search-form hidden" onsubmit="return false;">
+            <div class="field-group full-width">
+              <label>Pick-up Location</label>
+              <input type="text" placeholder="City or Airport" />
+            </div>
+            <button class="btn-search">Search Cars</button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <section class="promos container">
+      <h2>Trending Destinations</h2>
+      <div class="promo-grid">
+        <div class="card">
+          <div class="img-box">Image</div>
+          <div class="details">
+            <h3>Kyoto, Japan</h3>
+            <p>Flights from $550</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="img-box">Image</div>
+          <div class="details">
+            <h3>Paris, France</h3>
+            <p>Hotels from $120/night</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="img-box">Image</div>
+          <div class="details">
+            <h3>Maui, Hawaii</h3>
+            <p>Packages from $899</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="travel.js"></script>
+    <script>
+      // Inline Tab Switching Logic
+      function switchTab(tabId) {
+        // Hide all forms
+        document.querySelectorAll(".search-form").forEach((form) => {
+          form.classList.remove("active");
+          form.classList.add("hidden");
+        });
+        // Remove active class from buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Activate selected
+        document.getElementById(tabId).classList.remove("hidden");
+        document.getElementById(tabId).classList.add("active");
+
+        // Highlight button (simple lookup based on onclick attribute matching)
+        event.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

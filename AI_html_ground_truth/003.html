@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Feed</title>
+    <link rel="stylesheet" href="social.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">SocialNetwork</div>
+      <div class="nav-icons">
+        <button class="icon-btn active"><i class="fas fa-home"></i></button>
+        <button class="icon-btn">
+          <i class="fas fa-bell"></i><span class="badge">3</span>
+        </button>
+        <div class="profile-icon"></div>
+      </div>
+    </nav>
+
+    <div class="layout">
+      <main class="feed" id="feed-container">
+        <div class="create-post">
+          <div class="input-wrapper">
+            <div class="avatar-small"></div>
+            <textarea
+              id="post-input"
+              placeholder="What's on your mind?"
+            ></textarea>
+          </div>
+          <div class="actions">
+            <button onclick="document.getElementById('file-upload').click()">
+              <i class="fas fa-image"></i> Photo
+            </button>
+            <input type="file" id="file-upload" hidden />
+            <button class="post-btn" onclick="submitPost()">Post</button>
+          </div>
+        </div>
+
+        <article class="post" data-post-id="882">
+          <header class="post-header">
+            <div class="avatar"></div>
+            <div class="meta">
+              <h4>Sarah Jenkins</h4>
+              <span class="time">2 hours ago</span>
+            </div>
+            <button class="more-options">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
+          </header>
+          <div class="post-content">
+            <p>
+              Just finished hiking the tallest peak in the state! 🏔️ #hiking
+            </p>
+            <div class="post-image-placeholder">Image Content</div>
+          </div>
+          <div class="post-stats">
+            <span class="like-count">120 Likes</span>
+            <span class="comment-count">45 Comments</span>
+          </div>
+          <footer class="post-actions">
+            <button class="action-btn" onclick="toggleLike(this)">
+              <i class="far fa-thumbs-up"></i> Like
+            </button>
+            <button class="action-btn" onclick="toggleCommentSection(882)">
+              <i class="far fa-comment"></i> Comment
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-share"></i> Share
+            </button>
+          </footer>
+
+          <div class="comments-section" id="comments-882" style="display: none">
+            <div class="comment">
+              <div class="avatar-tiny"></div>
+              <div class="comment-body">
+                <strong>Mike Ross</strong>
+                <p>Wow! That looks amazing.</p>
+              </div>
+            </div>
+            <div class="write-comment">
+              <input type="text" placeholder="Write a reply..." />
+            </div>
+          </div>
+        </article>
+
+        <div id="loading-trigger" class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i> Loading more posts...
+        </div>
+      </main>
+    </div>
+
+    <script src="social.js"></script>
+  </body>
+</html>

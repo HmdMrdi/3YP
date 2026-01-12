@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MarketWatch - Realtime Data</title>
+    <link rel="stylesheet" href="stock.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="market-header">
+      <div class="logo">FinTrack <i class="fas fa-chart-line"></i></div>
+      <nav>
+        <a href="#">Markets</a>
+        <a href="#">News</a>
+        <a href="#">Portfolio</a>
+        <div class="user-menu">JD</div>
+      </nav>
+    </header>
+
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <div class="ticker-item">AAPL <span class="up">+1.2%</span></div>
+        <div class="ticker-item">TSLA <span class="down">-0.5%</span></div>
+        <div class="ticker-item">GOOGL <span class="up">+0.8%</span></div>
+        <div class="ticker-item">BTC <span class="up">+2.4%</span></div>
+        <div class="ticker-item">ETH <span class="down">-1.1%</span></div>
+      </div>
+    </div>
+
+    <div class="container layout">
+      <main class="watchlist-container">
+        <div class="list-header">
+          <h2>My Watchlist</h2>
+          <div class="controls">
+            <button class="btn-add">
+              <i class="fas fa-plus"></i> Add Symbol
+            </button>
+            <button class="btn-refresh" onclick="simulateLiveUpdate()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <table class="stock-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Change</th>
+              <th>% Change</th>
+              <th>Vol (M)</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="stock-body">
+            <tr id="row-AAPL">
+              <td class="symbol">
+                <div class="icon-box apple"><i class="fab fa-apple"></i></div>
+                <strong>AAPL</strong>
+              </td>
+              <td>Apple Inc.</td>
+              <td class="price" id="price-AAPL">175.40</td>
+              <td class="change up" id="change-AAPL">+2.10</td>
+              <td class="pct-change up" id="pct-AAPL">+1.21%</td>
+              <td>54.2M</td>
+              <td><button class="btn-trade">Trade</button></td>
+            </tr>
+
+            <tr id="row-TSLA">
+              <td class="symbol">
+                <div class="icon-box tesla">T</div>
+                <strong>TSLA</strong>
+              </td>
+              <td>Tesla, Inc.</td>
+              <td class="price" id="price-TSLA">242.50</td>
+              <td class="change down" id="change-TSLA">-1.20</td>
+              <td class="pct-change down" id="pct-TSLA">-0.49%</td>
+              <td>32.1M</td>
+              <td><button class="btn-trade">Trade</button></td>
+            </tr>
+
+            <tr id="row-AMZN">
+              <td class="symbol">
+                <div class="icon-box amazon"><i class="fab fa-amazon"></i></div>
+                <strong>AMZN</strong>
+              </td>
+              <td>Amazon.com</td>
+              <td class="price" id="price-AMZN">128.90</td>
+              <td class="change up" id="change-AMZN">+0.45</td>
+              <td class="pct-change up" id="pct-AMZN">+0.35%</td>
+              <td>28.5M</td>
+              <td><button class="btn-trade">Trade</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+
+      <aside class="sidebar">
+        <div class="widget">
+          <h3>Market Overview</h3>
+          <div class="index-card">
+            <span>S&P 500</span>
+            <strong class="up">4,350.20 <small>(+0.5%)</small></strong>
+          </div>
+          <div class="index-card">
+            <span>NASDAQ</span>
+            <strong class="up">13,400.10 <small>(+0.8%)</small></strong>
+          </div>
+          <div class="index-card">
+            <span>DOW JONES</span>
+            <strong class="down">33,200.50 <small>(-0.1%)</small></strong>
+          </div>
+        </div>
+
+        <div class="widget news">
+          <h3>Latest News</h3>
+          <article class="news-item">
+            <span class="time">10m ago</span>
+            <a href="#">Tech stocks rally ahead of earnings report.</a>
+          </article>
+          <article class="news-item">
+            <span class="time">1hr ago</span>
+            <a href="#">Fed signals potential rate pause in next meeting.</a>
+          </article>
+        </div>
+      </aside>
+    </div>
+
+    <script src="stock.js"></script>
+    <script>
+      // Inline Simulation Logic
+      function simulateLiveUpdate() {
+        const ids = ["AAPL", "TSLA", "AMZN"];
+
+        ids.forEach((id) => {
+          const priceEl = document.getElementById(`price-${id}`);
+          const changeEl = document.getElementById(`change-${id}`);
+          const pctEl = document.getElementById(`pct-${id}`);
+
+          // Random fluctuation
+          let currentPrice = parseFloat(priceEl.innerText);
+          let change = (Math.random() - 0.5) * 2; // Random between -1 and 1
+          let newPrice = currentPrice + change;
+
+          // Update DOM
+          priceEl.innerText = newPrice.toFixed(2);
+          changeEl.innerText = (change > 0 ? "+" : "") + change.toFixed(2);
+          pctEl.innerText =
+            (change > 0 ? "+" : "") +
+            ((change / currentPrice) * 100).toFixed(2) +
+            "%";
+
+          // Update Colors
+          const colorClass = change >= 0 ? "up" : "down";
+          changeEl.className = `change ${colorClass}`;
+          pctEl.className = `pct-change ${colorClass}`;
+
+          // Flash effect
+          priceEl.classList.add("flash");
+          setTimeout(() => priceEl.classList.remove("flash"), 500);
+        });
+      }
+
+      // Auto-update every 3 seconds
+      setInterval(simulateLiveUpdate, 3000);
+    </script>
+  </body>
+</html>

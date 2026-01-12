@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard - SaaSy</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <nav class="sidebar" id="sidebar">
+        <div class="logo-area">
+          <i class="fas fa-layer-group"></i> SaaSy App
+          <button class="close-sidebar d-md-none" onclick="toggleSidebar()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="nav-links">
+          <li class="active">
+            <a href="#" onclick="setActive(this)"
+              ><i class="fas fa-home"></i> Overview</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="setActive(this)"
+              ><i class="fas fa-chart-line"></i> Analytics</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="setActive(this)"
+              ><i class="fas fa-users"></i> Users</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="setActive(this)"
+              ><i class="fas fa-cog"></i> Settings</a
+            >
+          </li>
+        </ul>
+        <div class="user-profile-mini">
+          <div class="avatar">JD</div>
+          <div class="info">
+            <span class="name">John Doe</span>
+            <span class="role">Admin</span>
+          </div>
+          <button class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h2>Dashboard Overview</h2>
+          <div class="search-box">
+            <input
+              type="text"
+              id="table-search"
+              placeholder="Search data..."
+              onkeyup="filterTable()"
+            />
+          </div>
+        </header>
+
+        <section class="stats-grid">
+          <div class="stat-card">
+            <div class="icon blue"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+              <h3>Total Users</h3>
+              <p class="number" data-count="1245">0</p>
+              <span class="trend up">+12% this week</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="recent-activity">
+          <div class="section-header">
+            <h3>Recent Transactions</h3>
+            <button class="btn-export" onclick="exportData()">
+              Export CSV
+            </button>
+          </div>
+          <table id="transaction-table">
+            <thead>
+              <tr>
+                <th onclick="sortTable(0)">ID <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable(1)">User <i class="fas fa-sort"></i></th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1024</td>
+                <td>Alice Smith</td>
+                <td>Oct 24, 2023</td>
+                <td><span class="status complete">Completed</span></td>
+                <td>$24.00</td>
+                <td>
+                  <button class="btn-icon">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>#1025</td>
+                <td>Bob Jones</td>
+                <td>Oct 24, 2023</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>$120.00</td>
+                <td>
+                  <button class="btn-icon">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

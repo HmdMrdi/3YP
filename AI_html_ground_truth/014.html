@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Linux Distro for Beginners? - TechTalk Forum</title>
+    <link rel="stylesheet" href="forum.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="forum-nav">
+      <div class="container">
+        <a href="#" class="logo">TechTalk</a>
+        <div class="breadcrumbs">
+          <a href="#">Home</a> &rsaquo; <a href="#">OS</a> &rsaquo;
+          <a href="#">Linux</a> &rsaquo;
+          <span>Thread #9822</span>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container main-thread">
+      <article class="post op">
+        <aside class="user-profile">
+          <div class="avatar">N</div>
+          <a href="#" class="username">NewbieCoder</a>
+          <span class="role">Member</span>
+          <span class="stats">Posts: 12</span>
+        </aside>
+
+        <div class="post-body">
+          <header class="post-header">
+            <h1>Best Linux Distro for Beginners?</h1>
+            <span class="timestamp">Oct 26, 2023 at 10:45 AM</span>
+          </header>
+          <div class="post-content">
+            <p>Hi everyone,</p>
+            <p>
+              I'm tired of Windows and want to switch to Linux. However, I have
+              zero experience with the command line. Which distribution would
+              you recommend for a complete beginner?
+            </p>
+            <p>
+              I mostly use my computer for web browsing and basic coding
+              (Python).
+            </p>
+            <p>Thanks!</p>
+          </div>
+          <footer class="post-actions">
+            <button class="btn-vote" onclick="vote(this, 1)">
+              <i class="fas fa-arrow-up"></i> <span class="count">45</span>
+            </button>
+            <button class="btn-vote" onclick="vote(this, -1)">
+              <i class="fas fa-arrow-down"></i>
+            </button>
+            <button class="btn-reply" onclick="toggleReplyForm('reply-op')">
+              <i class="fas fa-reply"></i> Reply
+            </button>
+            <button class="btn-quote">
+              <i class="fas fa-quote-right"></i> Quote
+            </button>
+          </footer>
+
+          <div id="reply-op" class="reply-form-container hidden">
+            <textarea placeholder="Write your reply..."></textarea>
+            <button class="btn-submit">Post Reply</button>
+          </div>
+        </div>
+      </article>
+
+      <div class="thread-replies">
+        <article class="post reply">
+          <aside class="user-profile">
+            <div class="avatar blue">T</div>
+            <a href="#" class="username">TuxFan99</a>
+            <span class="role">Admin</span>
+            <span class="stats">Posts: 4k</span>
+          </aside>
+          <div class="post-body">
+            <header class="post-header">
+              <span class="reply-id">#2</span>
+              <span class="timestamp">Oct 26, 2023 at 11:00 AM</span>
+            </header>
+            <div class="post-content">
+              <p>Welcome to the community! 🐧</p>
+              <p>
+                I highly recommend <strong>Linux Mint</strong> or
+                <strong>Ubuntu</strong>. They both have great graphical
+                interfaces so you don't need to touch the terminal if you don't
+                want to.
+              </p>
+            </div>
+            <footer class="post-actions">
+              <button class="btn-vote" onclick="vote(this, 1)">
+                <i class="fas fa-arrow-up"></i> <span class="count">12</span>
+              </button>
+              <button class="btn-vote" onclick="vote(this, -1)">
+                <i class="fas fa-arrow-down"></i>
+              </button>
+              <button class="btn-reply" onclick="toggleReplyForm('reply-2')">
+                <i class="fas fa-reply"></i> Reply
+              </button>
+            </footer>
+            <div id="reply-2" class="reply-form-container hidden">
+              <textarea placeholder="Write your reply..."></textarea>
+              <button class="btn-submit">Post Reply</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="post reply nested">
+          <aside class="user-profile">
+            <div class="avatar green">S</div>
+            <a href="#" class="username">SudoUser</a>
+            <span class="role">Member</span>
+            <span class="stats">Posts: 150</span>
+          </aside>
+          <div class="post-body">
+            <header class="post-header">
+              <span class="reply-id">#3</span>
+              <span class="timestamp">Oct 26, 2023 at 11:15 AM</span>
+            </header>
+            <div class="post-content">
+              <p>
+                Seconding Mint! The Cinnamon edition feels very similar to
+                Windows 7, so the transition is super smooth.
+              </p>
+            </div>
+            <footer class="post-actions">
+              <button class="btn-vote" onclick="vote(this, 1)">
+                <i class="fas fa-arrow-up"></i> <span class="count">5</span>
+              </button>
+              <button class="btn-reply">
+                <i class="fas fa-reply"></i> Reply
+              </button>
+            </footer>
+          </div>
+        </article>
+      </div>
+
+      <div class="quick-reply">
+        <h3>Quick Reply</h3>
+        <form>
+          <textarea rows="5" placeholder="Join the conversation..."></textarea>
+          <button type="submit" class="btn-primary">Post Reply</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="forum.js"></script>
+    <script>
+      function toggleReplyForm(id) {
+        const form = document.getElementById(id);
+        form.classList.toggle("hidden");
+      }
+
+      function vote(btn, val) {
+        // Visual feedback only
+        btn.classList.toggle("voted");
+        const countSpan = btn.querySelector(".count");
+        if (countSpan) {
+          let current = parseInt(countSpan.innerText);
+          countSpan.innerText = btn.classList.contains("voted")
+            ? current + 1
+            : current - 1;
+        }
+      }
+    </script>
+  </body>
+</html>

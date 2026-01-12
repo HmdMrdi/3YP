@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - SecureBank</title>
+    <link rel="stylesheet" href="banking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="banking-layout">
+        <nav class="sidebar">
+            <div class="logo">SecureBank</div>
+            <ul>
+                <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-wallet"></i> Accounts</a></li>
+                <li class="active"><a href="#"><i class="fas fa-list"></i> History</a></li>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> Transfers</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <header class="page-header">
+                <h1>Checking Account (...4489)</h1>
+                <div class="balance-card">
+                    <span>Available Balance</span>
+                    <strong class="amount">$12,450.00</strong>
+                </div>
+            </header>
+
+            <div class="controls-bar">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="txn-search" placeholder="Search transactions..." onkeyup="filterTransactions()">
+                </div>
+                <div class="filters">
+                    <input type="date" id="start-date">
+                    <span>to</span>
+                    <input type="date" id="end-date">
+                    <button class="btn-primary" onclick="applyDateFilter()">Filter</button>
+                </div>
+                <button class="btn-download"><i class="fas fa-file-download"></i> Export</button>
+            </div>
+
+            <div class="table-container">
+                <table id="txn-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('date')">Date <i class="fas fa-sort"></i></th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th onclick="sortTable('amount')">Amount <i class="fas fa-sort"></i></th>
+                            <th>Balance</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="openModal('txn-001')">
+                            <td>Oct 24, 2023</td>
+                            <td>Netflix Subscription</td>
+                            <td><span class="badge entertainment">Entertainment</span></td>
+                            <td class="amount debit">-$15.99</td>
+                            <td>$12,450.00</td>
+                            <td><i class="fas fa-chevron-right"></i></td>
+                        </tr>
+                        <tr onclick="openModal('txn-002')">
+                            <td>Oct 22, 2023</td>
+                            <td>Grocery Market</td>
+                            <td><span class="badge food">Groceries</span></td>
+                            <td class="amount debit">-$84.30</td>
+                            <td>$12,465.99</td>
+                            <td><i class="fas fa-chevron-right"></i></td>
+                        </tr>
+                        <tr onclick="openModal('txn-003')">
+                            <td>Oct 20, 2023</td>
+                            <td>Payroll Deposit</td>
+                            <td><span class="badge income">Income</span></td>
+                            <td class="amount credit">+$2,500.00</td>
+                            <td>$12,550.29</td>
+                            <td><i class="fas fa-chevron-right"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="txn-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Transaction Details</h3>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </header>
+            <div class="modal-body" id="modal-body-content">
+                <div class="txn-summary">
+                    <div class="icon-circle"><i class="fas fa-shopping-bag"></i></div>
+                    <h2>Grocery Market</h2>
+                    <p class="amount debit">-$84.30</p>
+                </div>
+                <div class="txn-details-list">
+                    <div class="row"><span>Date:</span> <span>Oct 22, 2023</span></div>
+                    <div class="row"><span>Status:</span> <span>Posted</span></div>
+                    <div class="row"><span>Category:</span> <span>Groceries</span></div>
+                </div>
+                <button class="btn-dispute">Report an Issue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="banking.js"></script>
+</body>
+</html>

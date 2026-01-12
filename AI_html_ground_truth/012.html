@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streamline Your Workflow - CorpTech</title>
+    <link rel="stylesheet" href="landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header" id="navbar">
+      <div class="container">
+        <div class="logo">CorpTech</div>
+        <nav class="d-none d-md-flex">
+          <a href="#features">Features</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="cta-group">
+          <a href="#" class="btn-text">Login</a>
+          <a href="#" class="btn-primary">Get Started</a>
+        </div>
+        <button class="mobile-toggle d-md-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Automate your business logic with one click.</h1>
+          <p>
+            Stop wasting time on manual data entry. CorpTech helps you scale
+            your operations efficiently.
+          </p>
+          <div class="hero-btns">
+            <button class="btn-primary-lg">Start Free Trial</button>
+            <button class="btn-secondary-lg">
+              <i class="fas fa-play"></i> Watch Demo
+            </button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="img-placeholder">Dashboard UI Mockup</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2>Why Choose Us?</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon-box"><i class="fas fa-bolt"></i></div>
+            <h3>Lightning Fast</h3>
+            <p>
+              Our infrastructure is optimized for speed, ensuring zero latency.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+            <h3>Bank-Grade Security</h3>
+            <p>
+              We use 256-bit encryption to keep your data safe and compliant.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+            <h3>Detailed Analytics</h3>
+            <p>
+              Gain insights into your performance with our real-time dashboards.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+      <div class="container">
+        <h2>Trusted by Industry Leaders</h2>
+        <div class="slider-container">
+          <button class="slider-btn prev" onclick="moveSlider(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          <div class="slider-track" id="slider-track">
+            <div class="slide active">
+              <p class="quote">
+                "CorpTech revolutionized how we handle our supply chain. Highly
+                recommended!"
+              </p>
+              <div class="author">
+                <div class="avatar"></div>
+                <span>Jane Doe, CEO at LogisticsCo</span>
+              </div>
+            </div>
+            <div class="slide hidden">
+              <p class="quote">
+                "The best investment we made this year. The support team is
+                incredible."
+              </p>
+              <div class="author">
+                <div class="avatar"></div>
+                <span>Mark Smith, CTO at TechStart</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="slider-btn next" onclick="moveSlider(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Is there a free trial? <i class="fas fa-plus"></i>
+            </button>
+            <div class="accordion-body">
+              <p>
+                Yes, we offer a 14-day free trial with full access to all
+                features.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Can I cancel anytime? <i class="fas fa-plus"></i>
+            </button>
+            <div class="accordion-body">
+              <p>
+                Absolutely. You can cancel your subscription at any time from
+                your dashboard.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2023 CorpTech Inc. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="landing.js"></script>
+    <script>
+      // Inline accordion logic
+      function toggleAccordion(btn) {
+        const body = btn.nextElementSibling;
+        const icon = btn.querySelector("i");
+
+        if (body.style.maxHeight) {
+          body.style.maxHeight = null;
+          icon.classList.replace("fa-minus", "fa-plus");
+        } else {
+          body.style.maxHeight = body.scrollHeight + "px";
+          icon.classList.replace("fa-plus", "fa-minus");
+        }
+      }
+    </script>
+  </body>
+</html>

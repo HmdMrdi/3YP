@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="settings.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="logo">AppLogo</div>
+      <div class="user-menu">
+        <img src="avatar.jpg" alt="User" class="avatar-small" />
+      </div>
+    </nav>
+
+    <div class="container layout">
+      <aside class="settings-sidebar">
+        <div class="sidebar-header">
+          <h2>Settings</h2>
+        </div>
+        <ul class="settings-nav">
+          <li>
+            <button class="nav-btn active" onclick="openTab('general')">
+              <i class="fas fa-user-circle"></i> General
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="openTab('security')">
+              <i class="fas fa-lock"></i> Security
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="openTab('notifications')">
+              <i class="fas fa-bell"></i> Notifications
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="openTab('billing')">
+              <i class="fas fa-credit-card"></i> Billing
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="settings-content">
+        <div id="general" class="tab-content active">
+          <header class="content-header">
+            <h3>General Information</h3>
+            <p>Update your profile and contact details.</p>
+          </header>
+
+          <form class="settings-form" onchange="markUnsaved()">
+            <div class="section-block">
+              <div class="avatar-upload">
+                <div class="current-avatar">JD</div>
+                <div class="upload-btn-wrapper">
+                  <button class="btn-secondary">Change Avatar</button>
+                  <input type="file" name="avatar" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="input-group">
+                <label>First Name</label>
+                <input type="text" value="John" />
+              </div>
+              <div class="input-group">
+                <label>Last Name</label>
+                <input type="text" value="Doe" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Email Address</label>
+              <input type="email" value="john.doe@example.com" />
+            </div>
+
+            <div class="input-group">
+              <label>Bio</label>
+              <textarea rows="4">Product Designer based in NYC.</textarea>
+            </div>
+          </form>
+        </div>
+
+        <div id="notifications" class="tab-content hidden">
+          <header class="content-header">
+            <h3>Notification Preferences</h3>
+            <p>Manage how we communicate with you.</p>
+          </header>
+
+          <div class="settings-list">
+            <div class="setting-item">
+              <div class="text">
+                <h4>Email Notifications</h4>
+                <p>Receive weekly digests and updates.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="text">
+                <h4>Push Notifications</h4>
+                <p>Receive notifications on your device.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="text">
+                <h4>Marketing Emails</h4>
+                <p>Receive offers and promotions.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="security" class="tab-content hidden">
+          <header class="content-header">
+            <h3>Security</h3>
+          </header>
+          <form class="settings-form">
+            <div class="input-group">
+              <label>Current Password</label>
+              <input type="password" />
+            </div>
+            <div class="input-group">
+              <label>New Password</label>
+              <input type="password" />
+            </div>
+            <div class="setting-item">
+              <div class="text">
+                <h4>Two-Factor Authentication</h4>
+                <p>Add an extra layer of security.</p>
+              </div>
+              <button class="btn-outline">Enable 2FA</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="save-bar" class="save-bar hidden">
+          <span>You have unsaved changes.</span>
+          <div class="actions">
+            <button class="btn-text" onclick="resetForm()">Discard</button>
+            <button class="btn-primary" onclick="saveChanges()">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="settings.js"></script>
+    <script>
+      // Tab Switching
+      function openTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+          tab.classList.add("hidden");
+        });
+        // Show selected
+        const selected = document.getElementById(tabId);
+        selected.classList.remove("hidden");
+        selected.classList.add("active");
+
+        // Update sidebar buttons
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+      }
+
+      // Unsaved Changes Detection
+      function markUnsaved() {
+        document.getElementById("save-bar").classList.remove("hidden");
+      }
+
+      function saveChanges() {
+        const btn = document.querySelector(".save-bar .btn-primary");
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving';
+        setTimeout(() => {
+          document.getElementById("save-bar").classList.add("hidden");
+          btn.innerHTML = "Save Changes";
+          alert("Changes saved!");
+        }, 1000);
+      }
+
+      function resetForm() {
+        document.getElementById("save-bar").classList.add("hidden");
+        // Logic to reset form values would go here
+      }
+    </script>
+  </body>
+</html>
