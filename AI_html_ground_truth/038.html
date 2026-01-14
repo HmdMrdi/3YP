@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Homepage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="bg-dark text-white p-3 text-center">
+  <h2>Daily News</h2>
+</header>
+
+<div class="container mt-4">
+  <div class="row">
+    <main class="col-md-8">
+      <h3 id="headline">Breaking News Headline</h3>
+      <p id="story">This is the featured story.</p>
+    </main>
+
+    <aside class="col-md-4">
+      <h5>Categories</h5>
+      <button class="btn btn-sm btn-outline-primary mb-2" onclick="loadStory('Tech')">Tech</button>
+      <button class="btn btn-sm btn-outline-primary mb-2" onclick="loadStory('World')">World</button>
+      <button class="btn btn-sm btn-outline-primary mb-2" onclick="loadStory('Sports')">Sports</button>
+    </aside>
+  </div>
+</div>
+
+<script>
+const stories = {
+  Tech: ["Tech Innovation", "New AI released"],
+  World: ["Global Summit", "Leaders meet today"],
+  Sports: ["Championship Final", "Historic win"]
+};
+
+function loadStory(category) {
+  headline.textContent = stories[category][0];
+  story.textContent = stories[category][1];
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Corporate Landing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<section class="bg-dark text-white text-center p-5">
+  <h1>Company Name</h1>
+  <p>We build great software</p>
+</section>
+
+<section class="container my-5">
+  <div class="row">
+    <div class="col-md-4">Feature One</div>
+    <div class="col-md-4">Feature Two</div>
+    <div class="col-md-4">Feature Three</div>
+  </div>
+</section>
+
+<section class="bg-light p-5 text-center">
+  <h3>Testimonials</h3>
+  <p id="testimonial"></p>
+</section>
+
+<section class="container my-5">
+  <h3>FAQ</h3>
+  <button class="btn btn-link" onclick="toggleFAQ(this)">What do you offer?</button>
+  <p class="d-none">We offer solutions.</p>
+</section>
+
+<script>
+const testimonials = ["Great!", "Amazing!", "Fantastic!"];
+let index = 0;
+
+function rotateTestimonial() {
+  testimonial.textContent = testimonials[index++ % testimonials.length];
+}
+
+function toggleFAQ(btn) {
+  btn.nextElementSibling.classList.toggle("d-none");
+}
+
+setInterval(rotateTestimonial, 3000);
+rotateTestimonial();
+</script>
+
+</body>
+</html>

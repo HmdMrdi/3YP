@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Repository</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+  <h3>example-repo</h3>
+
+  <select id="branchSelect" class="form-select w-auto mb-3">
+    <option>main</option>
+    <option>dev</option>
+  </select>
+
+  <div class="row">
+    <aside class="col-md-4">
+      <ul class="list-group" id="fileTree"></ul>
+    </aside>
+
+    <main class="col-md-8">
+      <pre id="fileContent" class="border p-3">Select a file</pre>
+    </main>
+  </div>
+</div>
+
+<script src="repo.js"></script>
+</body>
+</html>

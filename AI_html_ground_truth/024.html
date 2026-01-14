@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #toc { position: sticky; top: 20px; }
+    pre { background:#f8f9fa; padding:1rem; }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid mt-4">
+  <div class="row">
+    <aside class="col-md-3" id="toc">
+      <input id="searchDocs" class="form-control mb-3" placeholder="Search">
+      <ul class="list-group" id="tocList">
+        <li class="list-group-item"><a href="#intro">Introduction</a></li>
+        <li class="list-group-item"><a href="#install">Installation</a></li>
+        <li class="list-group-item"><a href="#usage">Usage</a></li>
+      </ul>
+    </aside>
+
+    <main class="col-md-9" id="content">
+      <section id="intro"><h2>Introduction</h2><p>Overview text.</p></section>
+      <section id="install"><h2>Installation</h2><pre>npm install app</pre></section>
+      <section id="usage"><h2>Usage</h2><pre>import app from "app"</pre></section>
+    </main>
+  </div>
+</div>
+
+<script src="docs.js"></script>
+</body>
+</html>

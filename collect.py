@@ -37,29 +37,45 @@ import csv
 import urllib3
 import os
 
-def collect_features(url: str, safety_tag: str):
-    # to prevent 403 errors 
-    headers = {
-        # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0'
-        # 'User-Agent': 'ResearcherBot/1.0 (hmphpremium@gmail.com)'
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.111 Mobile Safari/537.36',
-        'Upgrade-Insecure-Requests': '1'
-    }
+def collect_features(url: str, safety_tag: str, local: bool):
+    soup=None
+
+    if local:
+        try:
+            with open(url, 'r', encoding='utf-8', errors='ignore') as file:
+                content = file.read()
+            soup = BeautifulSoup(content, 'html.parser')
+            #url = os.path.basename(url)   
+        except Exception as e:
+            print(f'error reading local file {url}: {e}')
+            return -1
+    
+    else:
+        # to prevent 403 errors 
+        headers = {
+            # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0'
+            # 'User-Agent': 'ResearcherBot/1.0 (hmphpremium@gmail.com)'
+            'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.111 Mobile Safari/537.36',
+            'Upgrade-Insecure-Requests': '1'
+        }
 
 
-    try:
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        
-        # NOTE: cloudscraper doesnt work either... selenium?
-        # i dont actually care anymore, if it doesnt work just skip -> although means dataset ignores cloudfare protected or cloudflare designated malicious sites
-        scraper = cloudscraper.CloudScraper()
-        response = scraper.get(url,headers=headers, timeout=10)
+        try:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+            
+            # NOTE: cloudscraper doesnt work either... selenium?
+            # i dont actually care anymore, if it doesnt work just skip -> although means dataset ignores cloudfare protected or cloudflare designated malicious sites
+            scraper = cloudscraper.CloudScraper()
+            response = scraper.get(url,headers=headers, timeout=10)
 
-        #response = requests.get(url,headers=headers,verify=False, timeout=10)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
+            #response = requests.get(url,headers=headers,verify=False, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+        except requests.RequestException as e:
+            print(f'Error fetching {url}: {e}')
+            return(-1)
 
-        
+    try:        
         #link related data capture NOTE: Consider taking log of total count as well may be useful
         null_link_count = external_link_count = internal_link_count = 0
         hyperlinks = soup.find_all('a')
@@ -215,16 +231,16 @@ def collect_features(url: str, safety_tag: str):
         page_depth = depth(base_nod)
 
         result = (url, safety_tag, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
-                   favicon,presence_of_links_in_tags, email_submission_forms, internal_media_count, external_media_count,
+                    favicon,presence_of_links_in_tags, email_submission_forms, internal_media_count, external_media_count,
                     sfh, nb_iframes, nb_popup_window, onmouseover, rcd, empty_title, page_depth)
 
         return(result)
+    except Exception as e:
+        print(f'Feature extraction error for {url} : {e}')
+        return -1
     
-    except requests.RequestException as e:
-        print(f'Error fetching {url}: {e}')
-        return(-1)
 
-def main(links: list, filename: str, safety_tag: str):
+def main(links: list, filename: str, safety_tag: str, local:bool):
     skipped_urls = []
     existing_urls = set()
     header = ['url', 'safety_tag', 'nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks','ratio_nullHyperlinks', 'nb_extCSS', 'login_form',
@@ -247,7 +263,7 @@ def main(links: list, filename: str, safety_tag: str):
         
         for link in links:
             if link not in existing_urls:
-                result = collect_features(link, safety_tag)
+                result = collect_features(link, safety_tag, local)
                 if result != -1:
                     writer.writerow(result)
                 else:
@@ -267,14 +283,34 @@ def linkify_the_text_file(link_file):
     return links
 
 
+def get_local_files(directory):
+    locals_path = []
+    if os.path.exists(directory):
+        for root, _, files, in os.walk(directory):
+            for file in files:
+                locals_path.append(os.path.join(root,file))
+    return locals_path
+
+
+
 
 # file_names = ['gng_links.txt', 'opp_links.txt', 'gpt_links.txt']
 # website_tags = ['benign', 'malicious', 'gpt_generated']
 # file_names = ['gng_links.txt', 'gpt_links.txt']
 # website_tags = ['benign', 'gpt_generated']
-file_names = ['gng_links.txt']
-website_tags = ['benign']
-for x, file in enumerate(file_names):
-    file = linkify_the_text_file(file)
-    main(file, 'website_features.csv', website_tags[x])
+
+# file_names = ['gng_links.txt']
+# website_tags = ['benign']
+# for x, file in enumerate(file_names):
+#     file = linkify_the_text_file(file)
+#     main(file, 'website_features.csv', website_tags[x])
+
+# ---------------- local testing ----------------
+local_directory = 'AI_html_ground_truth/'
+local_html_files  = get_local_files(local_directory)
+
+main(local_html_files, 'website_features.csv', 'gpt_generated', local=True)
+
+
+
         

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+  <h3>Checkout</h3>
+
+  <div class="progress mb-3">
+    <div id="progressBar" class="progress-bar" style="width:33%"></div>
+  </div>
+
+  <form id="checkoutForm">
+    <fieldset>
+      <legend>Shipping</legend>
+      <input class="form-control mb-2" placeholder="Address" required>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+    </fieldset>
+
+    <fieldset class="d-none">
+      <legend>Payment</legend>
+      <input class="form-control mb-2" placeholder="Card Number" required>
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+    </fieldset>
+
+    <fieldset class="d-none">
+      <legend>Review</legend>
+      <p>Order Total: £99.99</p>
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+      <button class="btn btn-success">Place Order</button>
+    </fieldset>
+  </form>
+</div>
+
+<script src="checkout.js"></script>
+</body>
+</html>
