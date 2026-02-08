@@ -299,17 +299,17 @@ def get_local_files(directory):
 # file_names = ['gng_links.txt', 'gpt_links.txt']
 # website_tags = ['benign', 'gpt_generated']
 
-# file_names = ['gng_links.txt']
-# website_tags = ['benign']
-# for x, file in enumerate(file_names):
-#     file = linkify_the_text_file(file)
-#     main(file, 'website_features.csv', website_tags[x])
+file_names = ['gpt_links.txt']
+website_tags = ['gpt_generated']
+for x, file in enumerate(file_names):
+    file = linkify_the_text_file(file)
+    main(file, 'website_features.csv', website_tags[x], local=False)
 
 # ---------------- local testing ----------------
-local_directory = 'AI_html_ground_truth/'
-local_html_files  = get_local_files(local_directory)
+# local_directory = 'AI_html_ground_truth/'
+# local_html_files  = get_local_files(local_directory)
 
-main(local_html_files, 'website_features.csv', 'gpt_generated', local=True)
+# main(local_html_files, 'website_features.csv', 'gpt_generated', local=True)
 
 
 
