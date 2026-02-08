@@ -38,36 +38,32 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 #for pca approaches
-# pca = PCA(n_components=12)
-# X_pca = pca.fit_transform(X_scaled)
-# X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.2, random_state=None, stratify=y)
-# print(f"Explained variance ratio: {pca.explained_variance_ratio_}")
-# print(f"Cumulative variance: {sum(pca.explained_variance_ratio_):.4f}")
+pca = PCA(n_components=12)
+X_pca = pca.fit_transform(X_scaled)
+X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.2, random_state=None, stratify=y)
+print(f"Explained variance ratio: {pca.explained_variance_ratio_}")
+print(f"Cumulative variance: {sum(pca.explained_variance_ratio_):.4f}")
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=20, stratify=y)
 
 # --- kNN or GNB or RandomForest ---
 # model2 = MLPClassifier(solver='lbfgs', alpha=0.7,hidden_layer_sizes=(400,200), max_iter=500) #this config is about 0.6+ maybe use xgboost idk
 # model = MLPClassifier(solver='lbfgs', alpha=0.7,hidden_layer_sizes=(100,50), max_iter=50, random_state=20)
-# modelP = KNeighborsClassifier(n_neighbors=30, weights='distance')
+modelP = KNeighborsClassifier(n_neighbors=30, weights='distance')
 # model = AdaBoostClassifier(n_estimators=50, random_state=None)
 model = RandomForestClassifier (n_estimators=50, random_state=20, class_weight='balanced', max_depth=30)
 # model = SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced')
 # model = GaussianNB()
-# modelR = LogisticRegression(max_iter=100, random_state=None, class_weight='balanced')
+modelR = LogisticRegression(max_iter=100, random_state=None, class_weight='balanced')
 # NOTE: GNB is terrible - accuracy = 0.0447 - can investigate, but at present suspect 'naive' assumption is grossly violated (heavy feature correlation) 
 
 
 estimators = [
-    ('RF', RandomForestClassifier (n_estimators=30, random_state=20, class_weight='balanced', max_depth=20)),
-    ('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced')),
-    ('kNN', KNeighborsClassifier(n_neighbors=30, weights='distance'))
+    ('RF', RandomForestClassifier (n_estimators=50, random_state=20, max_depth=10, class_weight='balanced', min_samples_split=2)),
+    ('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=True)),
+    ('kNN', KNeighborsClassifier(n_neighbors=5, weights='distance'))
 ]
 
-
-# stacking_model = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression(class_weight={0:1, 1:4, 2:1}))
-# modelS = stacking_model.fit(X_train, y_train)
-# predictions = modelS.predict(X_test)
 
 def cascade_ensemble(X, threshold):
     #modelR and modelP not always initialized
@@ -101,9 +97,12 @@ target_names = ['benign' ,'gpt generated',  'malicious'] #same order as they sho
 
 
 # #================================================== fit and predict #==================================================
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
+# model.fit(X_train, y_train)
+# predictions = model.predict(X_test)
 
+stacking_model = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression(class_weight={0:1, 1:4, 2:1}))
+modelS = stacking_model.fit(X_train, y_train)
+predictions = modelS.predict(X_test)
 
 #================================================== vote - in case of 3 way tie, prefer random forest ==================================================
 
