@@ -16,8 +16,13 @@ from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.metrics import accuracy_score, classification_report
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATA_DIR = BASE_DIR / "data" / "website_features.csv"
+
 # load and preprocess data
-df = pd.read_csv('website_features.csv')
+df = pd.read_csv(DATA_DIR)
 df_processed = df.iloc[:, 1:20]
 
 # print(df_processed)
