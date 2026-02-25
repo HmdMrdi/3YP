@@ -65,7 +65,7 @@ modelR = LogisticRegression(max_iter=100, random_state=None, class_weight='balan
 
 estimators = [
     ('RF', RandomForestClassifier (n_estimators=50, random_state=20, max_depth=10, class_weight='balanced', min_samples_split=2)),
-    ('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=True)),
+    ('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=False)),
     ('kNN', KNeighborsClassifier(n_neighbors=5, weights='distance'))
 ]
 

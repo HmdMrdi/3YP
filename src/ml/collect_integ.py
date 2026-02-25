@@ -209,8 +209,8 @@ def collect_features(url: str, safety_tag: str, local: bool):
         page_depth = depth(base_nod)
 
 
-
-        result = (url, safety_tag, link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
+        # collect integ will not have url and safety tag returned
+        result = (link_count, ratio_intHyperlinks, ratio_extHyperlinks, ratio_nullHyperlinks, nb_extCSS, login_form,
                     favicon,presence_of_links_in_tags, email_submission_forms, internal_media_count, external_media_count,
                     sfh, nb_iframes, nb_popup_window, onmouseover, rcd, empty_title, page_depth)
 

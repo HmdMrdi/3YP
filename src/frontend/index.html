@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+    <div class="mx-auto max-w-2xl py-12 px4">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight"> Website Classifier</h1>>
+            <h3 class="text-lg mt-4"> In Development: Type in link for realtime analysis</h3>
+        </header>
+        <main class="bg-white shadow-sm border border-gray-200 rounded-xl p-8">
+            <form hx-post=/api/livefeatures hx-target="#result" hx-swap="innerHTML" class="space-y-6">
+            <div> 
+                <label class="block text-sm font-medium text-gray-700"> Link </label>
+                <input type="text" name="data" class="w-full mt-1 border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ouline-none transition duration-100"
+                placeholder="https://example.com">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow transition">
+                Analyse 
+            </button>
+        </form>
+        <div id="result" class="mt-6 p-4 bg-cyan-50 border border-cyan-200 rounded-lg min-h-32">
+            <span class="text-black-500 text-xl font-bold"> Results </span>
+        </div>
+        </main>
+    </div>
+
+</body>
+</html>
