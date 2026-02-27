@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, HttpUrl, field_validator
-from ml import collect_integ
+from ml import collect_integ, model
 
 
 app = FastAPI()
@@ -38,7 +38,11 @@ async def livefeatures(data: str = Form(...)):
     data = MyModel(url=data)
     features = collect_integ.collect_features(str(data.url), "NA", False)
     #return {"response" : features}
-    print(features)
-    return f"<div class='text-xl font-bold'> Features for {str(data.url)} </div> <br> <div class='text-lg'> {features} </div>"
+    #print(features)
+    if features == -1:
+        prediction = "Unable to fetch URL - cloudflare or similar protection"
+    else:
+        prediction = model.run_model(features)
+    return f"<div class='text-xl font-bold'> Features for {str(data.url)} </div> <br> <div class='text-lg'> {prediction} </div>"
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name = "frontend")

@@ -45,9 +45,9 @@ def run_model(features) -> str:
     #print(X_train[0:5])
 
     model1 = RandomForestClassifier(n_estimators=50, random_state=20, max_depth=10, class_weight='balanced', min_samples_split=2, max_features='sqrt', verbose=False).fit(X_train, y_train)
-    predictions = model1.predict(features_scaled)
-    print(predictions)
-    pass
+    prediction = model1.predict(features_scaled)
+    print(prediction)
+    return prediction
 
 print(run_model((4, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 7, 0, False, 0, 0, False, False, False, 12)))
 
