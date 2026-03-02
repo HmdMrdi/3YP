@@ -297,11 +297,11 @@ def get_local_files(directory):
 # website_tags = ['benign', 'gpt_generated']
 
 #if path error probably here - shuffled some stuff around
-file_names = ['data\gpt_links.txt']
-website_tags = ['gpt_generated']
+file_names = ['data\opp_links_new.txt']
+website_tags = ['malicious']
 for x, file in enumerate(file_names):
     file = linkify_the_text_file(file)
-    main(file, 'data\website_features.csv', website_tags[x], local=False)
+    main(file, 'data\opp_features.csv', website_tags[x], local=False)
 
 # ---------------- local testing ----------------
 # local_directory = 'AI_html_ground_truth/'

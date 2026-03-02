@@ -9,20 +9,16 @@ is this kind of redundant? For now yes...
 import requests
 import cloudscraper
 from bs4 import BeautifulSoup, NavigableString
-import csv
 import urllib3
-import os
 
-# NOTE: This function is bad practice, consider rewriting -> mostly one big function
+# NOTE: Ammended version for integrating with API
 def collect_features(url: str, safety_tag: str, local: bool):
     soup=None
 
     # Reads from local file, when integrating, will need to write to a temp file and then run the function on that
     if local:
         try:
-            with open(url, 'r', encoding='utf-8', errors='ignore') as file:
-                content = file.read()
-            soup = BeautifulSoup(content, 'html.parser')
+            soup = BeautifulSoup(url, 'html.parser')
         except Exception as e:
             print(f'error reading local file {url}: {e}')
             return -1
