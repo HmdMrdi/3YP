@@ -7,24 +7,24 @@ from ml import collect_integ, model
 
 app = FastAPI()
 
-class MyModel(BaseModel):
+class UrlModel(BaseModel):
     url: HttpUrl
 
     @field_validator("url",mode="before")
     @classmethod
-    def clean(cls, v: str) -> str:
-        if isinstance(v, str):
-            v = v.strip()
-            if not v.startswith(("http://", "https://")):
-                return f"http://{v}"
-        return v
+    def clean(cls, input: str) -> str:
+        if isinstance(input, str):
+            input_stripped = input.strip()
+            if not input_stripped.startswith(("http://", "https://")):
+                return f"http://{input_stripped}"
+        return input
 
-# link = MyModel(url="youtube.com")
+# link = UrlModel(url="youtube.com")
 # print(link.url)
 
 @app.get("/api")
 def root():
-    return {"Model" : "Hello"}
+    return {"Response" : "Root endpoint - see /docs for API documentation"}
 
 # for quickl testing
 @app.get("/api/quicklive")
@@ -35,7 +35,7 @@ def livefeatures(url: str):
 @app.post("/api/livefeatures", response_class=HTMLResponse)
 async def livefeatures(data: str = Form(...)):
     # does not accept model for all websites for some reason - have to convert to string
-    data = MyModel(url=data)
+    data = UrlModel(url=data)
     features = collect_integ.collect_features(str(data.url), "NA", False)
     #return {"response" : features}
     #print(features)
@@ -48,7 +48,7 @@ async def livefeatures(data: str = Form(...)):
 
 
 
-# for quickl testing
+# for quick testing
 @app.get("/api/quickmanual")
 def livefeatures(url: str):
     features = collect_integ.collect_features(url, "NA", True)

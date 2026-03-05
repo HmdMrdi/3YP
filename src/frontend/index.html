@@ -7,40 +7,57 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
+<style>
+</style>
 
 
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
-    <div class="mx-auto max-w-2xl py-12 px4">
-        <header class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold tracking-tight"> Website Classifier</h1>
-            <h3 class="text-lg mt-4"> In Development: Type in link for realtime analysis</h3>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased bg-gradient-to-b from-yellow-400 via-orange-600 to-red-950">
+    <div class="mx-auto w-full pt-2 px4 bg-amber-400 border-b border-amber-500">
+        <header class="mb-8 text-center">
+            <h1 class="tracking-wide text-6xl font-thin p-6 text-white "> Website Classifier</h1>
         </header>
-        <main class="bg-white shadow-sm border border-gray-200 rounded-xl p-8">
+    </div>
+        <div class="mx-auto max-w-2xl py-12 px4 ">
+        <main class="bg-orange-900 shadow-sm rounded-xl p-8">
+            <div class="text-white">
+                <p>
+                This is a machine learning model that classifies website as benign, malicious or AI generated based on the DOM of the website.
+                </p>
+                The model is not always correct and the more extreme a website is, the more likely it is to be misclassified.
+                The <a href="https://berkshirehathaway.com">berkshire hathway</a> or <a href="https://ismycomputeron.net/"> ismycomputeron.net </a> are good examples of websites that are misclassified as malicious - dont ask why - i am yet to do the ablation studies.
+                </p>
+                <p>
+                Equally simple websites with little content are misclassified as AI generated See: <a href="https://motherfuckingwebsite.com/"> motherfuckingwebsite.com </a> (and of course the better version <a href="http://bettermotherfuckingwebsite.com/"> bettermotherfuckingwebsite.com </a>)
+                This is more a note to myself to check when i have tuned the model more.
+                </p>
+            </div>
             <form hx-post=/api/livefeatures hx-target="#result" hx-swap="innerHTML" class="space-y-6">
-                <label class="block text-sm font-medium text-gray-700"> Link </label>
-                <input type="text" name="data" class="w-full mt-1 border border-gray-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ouline-none transition duration-100"
+                <label class="block text-xl font-thin text-white text-center"> Link: </label>
+                <input type="text" name="data" class="w-full mt-1 p-2.5 rounded-md bg-amber-600 placeholder-white text-center text-white focus:outline-none"
                 placeholder="https://example.com">
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 shadow transition">
+                <div class="flex justify-center">
+            <button type="submit" class="rounded-lg bg-orange-600 hover:bg-red-500 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
                 Analyse 
             </button>
+            </div>
             </form>
-        <div id="result" class="mt-6 p-4 bg-cyan-50 border border-cyan-200 min-h-32 text-center">
-            <span class="text-black-500 text-xl font-bold"> Results </span>
+        <div id="result" class="mt-6 p-4 bg-red-100 border border-red-300 min-h-24 text-center rounded-md">
+            <span class="text-gray-500 text-xl font-bold"> Results </span>
 
 
         </div>
-            <div class="mt-8 font-bold text-2xl text-center">
+            <div class="mt-8 font-bold text-2xl text-center text-white">
                 Manual Analysis:
             </div>
-            <div class="m-4 font-thin text-center text-sm">
+            <div class="m-4 font-thin text-center text-sm text-white">
                 Websites may be protected by flagged as deceptive or malicious, or be protected by anti-scraping measures, in both cases the model will not be able to make a prediction.
                 In such cases, you can copy and paste the source code of the website into the form below.
             </div>
 
-            <div class="group relative flex cursor-help">
+            <div class="group relative flex w-2xl justify-center text-white">
                 <!-- update this -->
-                <span class="text-m"> Help </span>
-                <div class="absolute bottom-full mb-2 hidden text-xs group-hover:block">
+                <span class="text-md hover:text-orange-300 hover:scale-110 transition duration-300 ease-in-out"> Help </span>
+                <div class="absolute bottom-full mb-2 opacity-0 pointer-events-none text-xs bg-orange-500 p-4 rounded-md transition-opacity group-hover:opacity-90">
                     <p>Open webpage in your browser</p>
                     <p>Right click and "View Page Source"</p>
                     <p>Copy text and paste it into the form below</p>
@@ -48,17 +65,18 @@
             </div>
 
             <form hx-post=/api/manualfeatures hx-target="#result2" hx-swap="innerHTML" class="space-y-6">
-                <label class="block text-sm font-medium text-gray-700"> Source Code </label>
-                <textarea type="text" name="data" class="w-full mt-1 border border-gray-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ouline-none transition duration-100 min-h-48"
+                <label class="block text-xl font-thin text-white text-center pt-4"> Source Code: </label>
+                <textarea type="text" name="data" class="w-full mt-1 p-2.5 ouline-none rounded-md bg-amber-600 placeholder-white text-white min-h-48 focus:outline-none"
                 placeholder="Source code of website"></textarea>
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 shadow transition">
+            <div class="flex justify-center">
+                <button type="submit" class="rounded-lg bg-orange-600 hover:bg-red-500 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
                 Analyse 
             </button>
+            </div>
             </form>
-        <div id="result2" class="mt-6 p-4 bg-cyan-50 border border-cyan-200 min-h-32 text-center">
-            <span class="text-black-500 text-xl font-bold"> Results </span>
+        <div id="result2" class="mt-6 p-4 bg-red-100 border border-red-300 min-h-24 text-center rounded-md">
+            <span class="text-gray-500 text-xl font-bold"> Results </span>
         </main>
     </div>
-
 </body>
 </html>
