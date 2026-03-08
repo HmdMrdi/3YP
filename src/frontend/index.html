@@ -8,44 +8,73 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <style>
+    nav ul {
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        padding: 0.5rem 1rem;
+        color: white;
+        font-size: larger;
+    }
 </style>
 
 
 <body class="bg-gray-50 text-gray-900 font-sans antialiased bg-gradient-to-b from-yellow-400 via-orange-600 to-red-950">
-    <div class="mx-auto w-full pt-2 px4 bg-amber-400 border-b border-amber-500">
+    <div class="mx-auto w-full pt-2 px4 bg-amber-400">
         <header class="mb-8 text-center">
-            <h1 class="tracking-wide text-6xl font-thin p-6 text-white "> Website Classifier</h1>
+            <h1 class="tracking-wide text-6xl font-thin p-8 text-white "> Website Classifier</h1>
+        <nav>
+            <ul>
+                <li class="hover:underline hover:scale-110 transition duration-300 ease-in-out underline-offset-4 decoration-orange-500"><a href="/" > Home </a></li>
+                <li class="hover:underline hover:scale-110 transition duration-300 ease-in-out underline-offset-4 decoration-orange-500"><a href="https://www.dcs.warwick.ac.uk/" > Warwick </a></li>
+                <li class="hover:underline hover:scale-110 transition duration-300 ease-in-out underline-offset-4 decoration-orange-500"><a href="https://github.com" > Github</a></li>
+            </ul>
+        </nav>
         </header>
     </div>
-        <div class="mx-auto max-w-2xl py-12 px4 ">
-        <main class="bg-orange-900 shadow-sm rounded-xl p-8">
-            <div class="text-white">
-                <p>
-                This is a machine learning model that classifies website as benign, malicious or AI generated based on the DOM of the website.
-                </p>
-                The model is not always correct and the more extreme a website is, the more likely it is to be misclassified.
-                The <a href="https://berkshirehathaway.com">berkshire hathway</a> or <a href="https://ismycomputeron.net/"> ismycomputeron.net </a> are good examples of websites that are misclassified as malicious - dont ask why - i am yet to do the ablation studies.
-                </p>
-                <p>
-                Equally simple websites with little content are misclassified as AI generated See: <a href="https://motherfuckingwebsite.com/"> motherfuckingwebsite.com </a> (and of course the better version <a href="http://bettermotherfuckingwebsite.com/"> bettermotherfuckingwebsite.com </a>)
-                This is more a note to myself to check when i have tuned the model more.
-                </p>
-            </div>
-            <form hx-post=/api/livefeatures hx-target="#result" hx-swap="innerHTML" class="space-y-6">
-                <label class="block text-xl font-thin text-white text-center"> Link: </label>
-                <input type="text" name="data" class="w-full mt-1 p-2.5 rounded-md bg-amber-600 placeholder-white text-center text-white focus:outline-none"
-                placeholder="https://example.com">
-                <div class="flex justify-center">
-            <button type="submit" class="rounded-lg bg-orange-600 hover:bg-red-500 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
-                Analyse 
-            </button>
-            </div>
-            </form>
-        <div id="result" class="mt-6 p-4 bg-red-100 border border-red-300 min-h-24 text-center rounded-md">
-            <span class="text-gray-500 text-xl font-bold"> Results </span>
+    
+
+        <section class="mx-auto max-w-4xl py-12 px4 ">
+            <main class="bg-orange-900 shadow-sm rounded-xl p-8 flex flex-col">
+                <form hx-post=/api/livefeatures hx-target="#result" hx-swap="innerHTML" class="space-y-6">
+                    <label class="block text-2xl font-thin text-white text-center"> Link: </label>
+                        <div class="flex items-center bg-amber-600 rounded-md p-1.5">
+                            <input type="text" name="data" class="w-full mt-1 p-2.5 rounded-md bg-amber-600 placeholder-white text-xl font-thin text-white focus:outline-none" placeholder="https://example.com">
+                                <button type="submit" class="rounded-lg bg-orange-600 hover:bg-red-500 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
+                                    Analyse 
+                                </button>
+                        </div>
+                </form>
+            <div id="result" class="mt-6 p-4 bg-red-100 border border-red-300 min-h-24 text-center rounded-md">
+                <span class="text-gray-500 text-xl font-bold">
+                    Results
+                </span>
+            </main>
+        </section>
 
 
-        </div>
+
+        <section class ="mx-auto max-w-4xl pt-4 px4 items-center text-center flex flex-col pb-12">
+                <div class="grid grid-cols-3 gap-8 text-white text-lg font-thin flex-1 ">
+                    <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
+                    This is a machine learning model that classifies website as benign, malicious or AI generated based on the DOM of the website.
+                    </p>
+                    <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
+                    The model is not always correct and the more extreme a website is, the more likely it is to be misclassified.
+                    The <a href="https://berkshirehathaway.com">berkshire hathway</a> or <a href="https://ismycomputeron.net/"> ismycomputeron.net </a> are good examples of websites that are misclassified as malicious - dont ask why - i am yet to do the ablation studies.
+                    </p>
+                    <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
+                    Equally simple websites with little content are misclassified as AI generated See: <a href="https://motherfuckingwebsite.com/"> motherfuckingwebsite.com </a> (and of course the better version <a href="http://bettermotherfuckingwebsite.com/"> bettermotherfuckingwebsite.com</a>)
+                    This is more a note to myself to check when i have tuned the model more.
+                    </p>
+                </div>
+        </section>
+
+        <hr class="mx-auto w-3/4 border-yellow-500">
+            <section class="mx-auto max-w-2xl py-12 px4 ">
+                <main class="bg-orange-900 shadow-sm rounded-xl p-8">
+        </div> 
             <div class="mt-8 font-bold text-2xl text-center text-white">
                 Manual Analysis:
             </div>
@@ -65,11 +94,11 @@
             </div>
 
             <form hx-post=/api/manualfeatures hx-target="#result2" hx-swap="innerHTML" class="space-y-6">
-                <label class="block text-xl font-thin text-white text-center pt-4"> Source Code: </label>
-                <textarea type="text" name="data" class="w-full mt-1 p-2.5 ouline-none rounded-md bg-amber-600 placeholder-white text-white min-h-48 focus:outline-none"
+                <label class="block text-xl font-bold text-white text-center pt-4"> Source Code: </label>
+                <textarea type="text" name="data" class="w-full mt-1 p-2.5 ouline-none rounded-md bg-gray-500 placeholder-white text-white min-h-48 focus:outline-none"
                 placeholder="Source code of website"></textarea>
             <div class="flex justify-center">
-                <button type="submit" class="rounded-lg bg-orange-600 hover:bg-red-500 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
+                <button type="submit" class="rounded-lg bg-blue-600 hover:bg-blue-400 hover:scale-105 text-white font-bold py-3 px-6 shadow transition text-xl">
                 Analyse 
             </button>
             </div>
@@ -77,6 +106,10 @@
         <div id="result2" class="mt-6 p-4 bg-red-100 border border-red-300 min-h-24 text-center rounded-md">
             <span class="text-gray-500 text-xl font-bold"> Results </span>
         </main>
-    </div>
+    </section>
+
+    <footer class="mx-auto w-full p-8 text-center text-white bg-inherit>
+        <p class="copyright">&copy; 2026: <a href="https://idonthaveawebsite.com">HMD</a>.</p>
+    </footer>
 </body>
 </html>

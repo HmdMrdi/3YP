@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup, NavigableString
 import urllib3
 
 # NOTE: Ammended version for integrating with API
+# when local = True, url is actually the source code of the webpage else url is the url
 def collect_features(url: str, safety_tag: str, local: bool):
     soup=None
 
@@ -58,6 +59,23 @@ def collect_features(url: str, safety_tag: str, local: bool):
                 external_link_count += 1
             elif href in url:
                 internal_link_count += 1
+
+
+            '''
+            NOTE: Problem - when using source code (i.e. local=True) and not url, we dont have url to compare to, - the logic has been kept the same for the above
+            the below offers a psuedo fix, but it is not good - because it can count internal links as external if they use their own urls.
+            Not fully fixable either -> user may want to use source code that doesnt have a url
+
+            tl;dr model should be fine for live websites, maybe less accurate for local files.
+            '''
+
+
+            # elif href.startswith('http'):
+            #     if local:
+            #         external_link_count += 1
+            #     else:
+            #         if url not in href:
+            #             external_link_count += 1
 
         link_count = len(hyperlinks)
         if link_count == 0:
