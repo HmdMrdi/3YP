@@ -11,6 +11,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 from sklearn.ensemble import RandomForestClassifier
 
@@ -43,37 +44,46 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 #for pca approaches
-pca = PCA(n_components=12)
+pca = PCA(n_components=8)
 X_pca = pca.fit_transform(X_scaled)
-X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.2, random_state=None, stratify=y)
-print(f"Explained variance ratio: {pca.explained_variance_ratio_}")
-print(f"Cumulative variance: {sum(pca.explained_variance_ratio_):.4f}")
+#X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.2, random_state=26, stratify=y)
 
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=20, stratify=y)
+# print(f"Explained variance ratio: {pca.explained_variance_ratio_}:.4f")
+# print(f"Cumulative variance: {sum(pca.explained_variance_ratio_):.4f}")
+
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=26, stratify=y)
 
 # --- kNN or GNB or RandomForest ---
 # model2 = MLPClassifier(solver='lbfgs', alpha=0.7,hidden_layer_sizes=(400,200), max_iter=500) #this config is about 0.6+ maybe use xgboost idk
-# model = MLPClassifier(solver='lbfgs', alpha=0.7,hidden_layer_sizes=(100,50), max_iter=50, random_state=20)
-modelP = KNeighborsClassifier(n_neighbors=30, weights='distance')
+# model = MLPClassifier(solver='lbfgs', alpha=0.7,hidden_layer_sizes=(100,50), max_iter=50, random_state=26)
+modelP = KNeighborsClassifier(weights='distance').fit(X_train, y_train)
 # model = AdaBoostClassifier(n_estimators=50, random_state=None)
-model = RandomForestClassifier (n_estimators=50, random_state=20, class_weight='balanced', max_depth=30)
+
+# formerly: estimators = 50, depth = 30
+# modelR = RandomForestClassifier (random_state=26, class_weight='balanced').fit(X_train, y_train)
+modelT = DecisionTreeClassifier(class_weight='balanced').fit(X_train, y_train)
+
 # model = SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced')
-# model = GaussianNB()
-modelR = LogisticRegression(max_iter=100, random_state=None, class_weight='balanced')
+modelG = GaussianNB().fit(X_train, y_train)
+modelL = LogisticRegression(max_iter=100, random_state=26, class_weight='balanced')
 # NOTE: GNB is terrible - accuracy = 0.0447 - can investigate, but at present suspect 'naive' assumption is grossly violated (heavy feature correlation) 
 
 
+
+#('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=False)),
 estimators = [
-    ('RF', RandomForestClassifier (n_estimators=50, random_state=20, max_depth=10, class_weight='balanced', min_samples_split=2)),
-    ('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=False)),
+    ('GNB', GaussianNB()),
+    ('RF', RandomForestClassifier (n_estimators=50, random_state=26, max_depth=10, class_weight='balanced', min_samples_split=2)),
     ('kNN', KNeighborsClassifier(n_neighbors=5, weights='distance'))
 ]
 
+stacking_model = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression(class_weight={0:1, 1:4, 2:1}))
+modelS = stacking_model.fit(X_train, y_train)
 
 def cascade_ensemble(X, threshold):
     #modelR and modelP not always initialized
     try:
-        recall_probs = modelR.predict_proba(X)[:, 1] # probability of positive class
+        recall_probs = modelL.predict_proba(X)[:, 1] # probability of positive class
         suspicious_cases = recall_probs >=  threshold
 
         result = np.zeros(len(X))
@@ -87,17 +97,18 @@ def cascade_ensemble(X, threshold):
     
     return result
 
+model = modelT
 
 # cross validation
-# kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=20)
-kf = KFold(n_splits=5, shuffle=True, random_state=20)
+# kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=26)
+kf = KFold(n_splits=5, shuffle=True, random_state=26)
 cv_scores = cross_val_score(model, X_train, y_train, cv=kf)
 target_names = ['benign' ,'gpt generated',  'malicious'] #same order as they show up - who would have thought
 
-# cv_predict = cross_val_predict(model, X_train, y_train, cv=kf)
-# print('Classification Report CV:')
-# print(f'{classification_report(y_train, cv_predict, target_names=target_names)}')
-# print(f"Average Cross-Validation Accuracy: {cv_scores.mean():.4f} with std: {cv_scores.std():.4f}")
+cv_predict = cross_val_predict(model, X_train, y_train, cv=kf)
+print('Classification Report CV:')
+print(f'{classification_report(y_train, cv_predict, target_names=target_names)}')
+print(f"Average Cross-Validation Accuracy: {cv_scores.mean():.4f} with std: {cv_scores.std():.4f}")
 
 
 
@@ -105,9 +116,7 @@ target_names = ['benign' ,'gpt generated',  'malicious'] #same order as they sho
 # model.fit(X_train, y_train)
 # predictions = model.predict(X_test)
 
-stacking_model = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression(class_weight={0:1, 1:4, 2:1}))
-modelS = stacking_model.fit(X_train, y_train)
-predictions = modelS.predict(X_test)
+predictions = model.predict(X_test)
 
 #================================================== vote - in case of 3 way tie, prefer random forest ==================================================
 
