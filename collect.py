@@ -1,6 +1,6 @@
 '''
 This file serves 2 purposes:
-    - collecting and returning relevent features from a given 
+    - collecting and returning relevent features from a given file
 
 ----------- Feature to be collected -----------
 nb_hyperlinks - no. of hyperlinks
@@ -8,10 +8,7 @@ ratio_intHyperlinks - ration of internal hyperlinks
 ratio_extHyperlinks - ibid external
 ratio_nullHyperlinks - ibid null
 nb_extCSS - no. of external CSS
-ratio_intErrors - ratio of internal hyperlinks that are errors
-ratio_extErrors - ibid external
 login_form - presence of login form
-external_favicon - presence of external favicon
 links_in_tags - presence of hyperlinks in <script> <style> ... tags
 submit_email - email submissiosn in forms
 ratio_intMedia

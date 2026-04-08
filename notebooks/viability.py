@@ -1,9 +1,13 @@
+'''
+This file was a notebook before i started using notebooks, contains messy and redundant code
+kept as was starting point
+'''
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict, KFold, StratifiedKFold
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.utils.class_weight import compute_sample_weight
 
 from sklearn.ensemble import StackingClassifier
 from sklearn.neighbors import KNeighborsClassifier

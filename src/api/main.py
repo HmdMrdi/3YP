@@ -35,16 +35,22 @@ def livefeatures(url: str):
 @app.post("/api/livefeatures", response_class=HTMLResponse)
 async def livefeatures(data: str = Form(...)):
     # does not accept model for all websites for some reason - have to convert to string
-    data = UrlModel(url=data)
-    features = collect_integ.collect_features(str(data.url), "NA", False)
-    #return {"response" : features}
-    #print(features)
-    if features == -1:
-        prediction = "Unable to fetch URL - cloudflare or similar protection"
-    else:
-        prediction = model.run_model(features)
-        prediction = "Benign" if prediction[0] == 0 else "GPT" if prediction[0] == 1 else "Phishing/Malicious"
-    return f"<div class='text-xl font-bold'> Features for {str(data.url)} </div> <br> <div class='text-lg'> {prediction} </div>"
+    try:
+        data = UrlModel(url=data)
+        features = collect_integ.collect_features(str(data.url), "NA", False)
+        #return {"response" : features}
+        #print(features)
+        if features == -1:
+            prediction = "Unable to fetch URL - cloudflare or similar protection"
+        else:
+            predictions = model.run_model(features)
+            prediction, prediction_proba = predictions
+            prediction = "Benign" if prediction[0] == 0 else "GPT" if prediction[0] == 1 else "Phishing/Malicious"
+        return f"<div class='text-xl font-bold'> Features for {str(data.url)} </div> <br> <div class='text-lg'> {prediction} ({prediction_proba.max()*100:.2f}%)</div>"
+    # Very wide net -> some cases like protected content or just non existent URLs can cause errors
+    except Exception as e:
+        print(f"Could not processs - {e}")
+        return f"<div class='text-xl font-bold'> URL Invalid </div>"
 
 
 
@@ -60,13 +66,14 @@ async def livefeatures(data: str = Form(...)):
     if features == -1:
         prediction = "Unable to process content"
     else:
-        prediction = model.run_model(features)
+        predictions = model.run_model(features)
+        prediction, prediction_proba = predictions
         prediction = "Benign" if prediction[0] == 0 else "GPT" if prediction[0] == 1 else "Phishing/Malicious"
 
     # Fun accidental injection: str(data) is source html code, which is rendered in the frontend
     #return f"<div class='text-xl font-bold'> Features for {str(data)} </div> <br> <div class='text-lg'> {prediction} </div>"
     
-    return f"<div class='text-xl font-bold'> Features for this website </div> <br> <div class='text-lg'> {prediction} </div>"
+    return f"<div class='text-xl font-bold'> Features for this website </div> <br> <div class='text-lg'> {prediction} ({prediction_proba.max()*100:.2f}%) </div>"
 
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name = "frontend")
