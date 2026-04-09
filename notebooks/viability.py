@@ -67,14 +67,12 @@ modelP = KNeighborsClassifier(weights='distance').fit(X_train, y_train)
 # modelR = RandomForestClassifier (random_state=26, class_weight='balanced').fit(X_train, y_train)
 modelT = DecisionTreeClassifier(class_weight='balanced').fit(X_train, y_train)
 
-# model = SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced')
 modelG = GaussianNB().fit(X_train, y_train)
 modelL = LogisticRegression(max_iter=100, random_state=26, class_weight='balanced')
 # NOTE: GNB is terrible - accuracy = 0.0447 - can investigate, but at present suspect 'naive' assumption is grossly violated (heavy feature correlation) 
 
 
 
-#('LR', SVC(kernel='rbf', C=1.0, gamma='scale', class_weight='balanced', verbose=False)),
 estimators = [
     ('GNB', GaussianNB()),
     ('RF', RandomForestClassifier (n_estimators=50, random_state=26, max_depth=10, class_weight='balanced', min_samples_split=2)),
