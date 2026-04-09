@@ -6,17 +6,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
-<style>
-    nav ul {
-        display: flex;
-        justify-content: center;
-    }
-    nav ul li {
-        padding: 0.5rem 1rem;
-        color: white;
-        font-size: larger;
-    }
-</style>
 
 
 <body class="bg-gray-50 text-gray-900 font-sans antialiased bg-gradient-to-b from-yellow-400 via-orange-600 to-red-950">
@@ -50,15 +39,15 @@
         <section class ="mx-auto max-w-4xl pt-4 px4 items-center text-center flex flex-col pb-12">
                 <div class="grid grid-cols-3 gap-8 text-white text-lg font-thin flex-1 ">
                     <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
-                    This is a machine learning model that classifies website as benign, malicious or AI generated based on the DOM of the website.
+                    This is a machine learning model that classifies website as benign, malicious or AI generated based on the DOM of the website. The numerical score is an uncalibrated probability score that will be removed in the future.
                     </p>
                     <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
                     The model is not always correct and the more extreme a website is, the more likely it is to be misclassified.
-                    The <a href="https://berkshirehathaway.com">berkshire hathway</a> or <a href="https://ismycomputeron.net/"> ismycomputeron.net </a> are good examples of websites that are misclassified as malicious - dont ask why - i am yet to do the ablation studies.
+                    The <a href="https://berkshirehathaway.com">berkshire hathway</a> or <a href="https://ismycomputeron.net/"> ismycomputeron.net </a> are good examples of websites that are misclassified.
+                    As such the model should not be used a sole source of truth.
                     </p>
                     <p class="p-6 bg-orange-400 hover:bg-orange-500 hover:scale-110 transition duration-300 ease-in-out hover:shadow-lg">
-                    Equally simple websites with little content are misclassified as AI generated See: <a href="https://motherfuckingwebsite.com/"> motherfuckingwebsite.com </a> (and of course the better version <a href="http://bettermotherfuckingwebsite.com/"> bettermotherfuckingwebsite.com</a>)
-                    This is more a note to myself to check when i have tuned the model more.
+                    In the case that the automated link-based analysis fails, you can use the manual analysis below.
                     </p>
                 </div>
         </section>
@@ -70,14 +59,14 @@
             <div class="mt-8 font-bold text-2xl text-center text-white">
                 Manual Analysis:
             </div>
-            <div class="m-4 font-thin text-center text-sm text-white">
+            <div class="m-4 font-thin text-center text-md text-white">
                 Websites may be protected by flagged as deceptive or malicious, or be protected by anti-scraping measures, in both cases the model will not be able to make a prediction.
                 In such cases, you can copy and paste the source code of the website into the form below.
             </div>
 
             <div class="group relative flex w-2xl justify-center text-white">
                 <!-- update this -->
-                <span class="text-md hover:text-orange-300 hover:scale-110 transition duration-300 ease-in-out"> Help </span>
+                <span class="text-lg hover:text-orange-300 hover:scale-110 transition duration-300 ease-in-out"> Help </span>
                 <div class="absolute bottom-full mb-2 opacity-0 pointer-events-none text-xs bg-orange-500 p-4 rounded-md transition-opacity group-hover:opacity-90">
                     <p>Open webpage in your browser</p>
                     <p>Right click and "View Page Source"</p>
@@ -101,7 +90,7 @@
     </section>
 
     <footer class="mx-auto w-full p-8 text-center text-white bg-inherit>
-        <p class="copyright">&copy; 2026: <a href="https://idonthaveawebsite.com">HMD</a>.</p>
+        <p class="text-sm"> Disclaimer: This tool is predictive and is prone to misclassification. Probability scores are uncalibrated.</p>
     </footer>
 </body>
 </html>

@@ -73,7 +73,7 @@ async def livefeatures(data: str = Form(...)):
     # Fun accidental injection: str(data) is source html code, which is rendered in the frontend
     #return f"<div class='text-xl font-bold'> Features for {str(data)} </div> <br> <div class='text-lg'> {prediction} </div>"
     
-    return f"<div class='text-xl font-bold'> Features for this website </div> <br> <div class='text-lg'> {prediction} ({prediction_proba.max()*100:.2f}%) </div>"
+    return f"<div class='text-xl font-bold'> Features for this website </div> <br> <div class='text-lg'> {prediction} ({prediction_proba.max()*100:.2f}%)</div>"
 
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name = "frontend")

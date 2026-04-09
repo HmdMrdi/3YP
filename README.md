@@ -10,10 +10,15 @@ python -m venv venv
 ```
 and activate venv
 
-Install dependencies (extracted automatically - if you see this message, i have not had time to verify it got all dependencies):
+Install dependencies (use requirements_ext if requirements does not work):
 
+```
 pip install -r requirements.txt
-
+```
+or
+```
+python -m pip install -r requirements.txt
+```
 
 ## Run
 ```
