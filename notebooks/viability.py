@@ -23,7 +23,7 @@ from sklearn.metrics import accuracy_score, classification_report
 
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path.cwd().parent
 DATA_DIR = BASE_DIR / "data" / "website_features.csv"
 
 # load and preprocess data
