@@ -5,9 +5,9 @@ Collected features are passed into the joblib saved model before being passed to
 
 ## Installation
 Once installed and CD into repo create venv:
-
+```
 python -m venv venv
-
+```
 and activate venv
 
 Install dependencies (extracted automatically - if you see this message, i have not had time to verify it got all dependencies):
@@ -16,9 +16,10 @@ pip install -r requirements.txt
 
 
 ## Run
-
+```
 cd src
 uvicorn api.main:app --reload
+```
 (--reload optional -> restarts on all code changes)
 
 Application runs on http://127.0.0.1:8000
