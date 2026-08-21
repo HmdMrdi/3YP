@@ -1,5 +1,5 @@
 # CS310 3YP
-The applicaiton is designed to run as a web app that takes either html source code, or the URL as input, processes it using collect_integ (slightly modified version of collect.py)
+The application is designed to run as a web app that takes either html source code, or the URL as input, processes it using collect_integ (slightly modified version of collect.py)
 Collected features are passed into the joblib saved model before being passed to the frontend
 
 
